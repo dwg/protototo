@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>test</title>
+		<script type="text/javascript" src="./javascripts/prototype.js"></script>
+		<script type="text/javascript" src="./javascripts/effects.js"></script>
+		<script type="text/javascript" src="./javascripts/lowpro.js"></script>
+		<script type="text/javascript" src="../dist/dialogs.js"></script>
+		<script type="text/javascript">
+//<![CDATA[
+DialogOptions = {
+	stylesheetPath: '../dist/stylesheets/dialogs.css',
+	ie6StylesheetPath: '../dist/stylesheets/dialogs_ie6.css',
+	
+	Lightbox: {
+		closeImage: '../dist/images/close.png',
+		loadImage: '../dist/images/loading.gif'
+	}	
+};
+(function() {
+	Event.addBehavior({
+		'a[href][rel^=lightbox]:click': function(event) {
+			if (this.href) {
+				event.stop();
+				new Dialog.Lightbox({start: this});
+			}
+		},
+		
+		'a#alert:click': function(event) {
+			event.stop();
+			new Dialog.Alert();
+		},
+		'a#confirm:click': function(event) {
+			event.stop();
+			new Dialog.Confirm();
+		},
+		'a#multi:click': function(event) {
+			event.stop();
+			new Dialog.Buttons({
+				button1Text: 'Button 1',
+				onButton1: Dialog.emptyEventHandler,
+				button2Text: 'Button 2',
+				onButton2: Dialog.emptyEventHandler,
+				button3Text: 'Button 3',
+				onButton3: Dialog.emptyEventHandler,
+				button4Text: 'Button 4',
+				onButton4: Dialog.emptyEventHandler,
+				button5Text: 'Button 5',
+				onButton5: Dialog.emptyEventHandler,
+				okayText: 'OK',
+				onOkay: Dialog.emptyEventHandler,
+				cancelText: 'Cancel',
+				onCancel: Dialog.closer
+			});
+		}
+	});
+})();
+//]]>
+		</script>
+		<style type="text/css">
+			body {
+				height: 1000px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			<a id="alert" href="#">Show me an alert</a><br/>
+			<a id="confirm" href="#">Show me a confirm</a><br/>
+			<a id="multi" href="#">Show me an multi-button dialog</a><br/>
+			<a href="./images/money.jpg" title="This is my caption" rel="lightbox">Show me the money</a>
+		</p>
+	</body>
+</html>

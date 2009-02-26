@@ -1,2 +1,3 @@
 .project
+.loadpath
 dist/dialogs.js

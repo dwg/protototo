@@ -8,19 +8,18 @@
 	width: 100%;
 	z-index: 100;
 	}
-	#modal_cover img {
-		position: fixed;
-		left: 50%;
-		top: 50%;
-		margin: -11px -63px 0 0;
-	}
 
+#dialog_wrapper {
+	width: 100%;
+	position: fixed;
+	z-index: 101;
+}
 #dialog {
 	background-color: #fff;
 	border: 2px solid #000;
+	width: 400px;
 	padding: 20px;
-	position: fixed;
-	z-index: 101;
+	margin: 0 auto;
 	}
 	#dialog #dialog_buttons {
 		margin: 10px 0 0;
@@ -33,11 +32,10 @@
 
 #dialog.lightbox {
 	padding: 10px;
-	width: 150px;
-	height: 50px;
+	width: 200px;
+	height: 200px;
 	border: none;
-	border-right: 2px solid #666;
-	border-bottom: 2px solid #666;
+	position: relative;
 	}
 	#dialog.lightbox #lightbox_loading {
 		position: absolute;
@@ -45,6 +43,49 @@
 		left: 50%;
 		margin: -11px 0 0 -63px;
 	}
+	#dialog.lightbox #lightbox_prev, #dialog.lightbox #lightbox_next {
+		width: 49%;
+		height: 100%;
+		position: absolute;
+		top: 10px;
+		display: block;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		}
+		#dialog.lightbox #lightbox_prev {
+			left: 0;
+			background-position: 0 15%;
+		}
+		#dialog.lightbox #lightbox_next {
+			right: 0;
+			background-position: 100% 15%;
+		}
+	#dialog.lightbox #lightbox_panel {
+		background-color: #fff;
+		position: relative;
+		padding: 10px;
+		left: -10px;
+		}
+		#dialog.lightbox #lightbox_panel p {
+			margin: 0;
+			width: 70%;
+			float: left;
+			font-weight: bold;
+			font-size: 77%;
+			color: #666;
+			}
+			#dialog.lightbox #lightbox_panel p#lightbox_number_display {
+				clear: left;
+				font-weight: normal;
+			}
+		#dialog.lightbox #lightbox_panel a {
+			width: 66px;
+			float: right;
+			cursor: pointer;
+			}
+			#dialog.lightbox #lightbox_panel a img {
+				border: none;
+			}
 
 #dialog .clear {
 	clear: both;

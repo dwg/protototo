@@ -14,8 +14,10 @@ DialogOptions = {
 	ie6StylesheetPath: '../dist/stylesheets/dialogs_ie6.css',
 	
 	Lightbox: {
-		closeImage: '../dist/images/close.png',
-		loadImage: '../dist/images/loading.gif'
+		closeImage: '../dist/images/closelabel.gif',
+		loadImage: './images/big_loading.gif',
+		nextImage: '../dist/images/nextlabel.gif',
+		prevImage: '../dist/images/prevlabel.gif'
 	}	
 };
 (function() {
@@ -62,6 +64,10 @@ DialogOptions = {
 			body {
 				height: 1000px;
 			}
+			
+			#dialog.lightbox img#lightbox_loading {
+				margin: -64px 0 0 -64px;
+			}
 		</style>
 	</head>
 	<body>
@@ -69,7 +75,13 @@ DialogOptions = {
 			<a id="alert" href="#">Show me an alert</a><br/>
 			<a id="confirm" href="#">Show me a confirm</a><br/>
 			<a id="multi" href="#">Show me an multi-button dialog</a><br/>
-			<a href="./images/money.jpg" title="This is my caption" rel="lightbox">Show me the money</a>
+			<a href="./images/money.jpg" title="This is my caption" rel="lightbox">Show me the money</a><br/>
+			<a href="http://www.lokeshdhakar.com/projects/lightbox2/images/image-1.jpg" title="This is a really really really really looooooooong caption with lots of words and stuff" rel="lightbox[group]">From outside</a><br/>
+			<a href="http://www.totil.com/files/images/kort_cph_big.preview.jpg" rel="lightbox[group]">From outside 2</a><br/>
+			<a href="./images/image-3.jpg" title="This is my caption" rel="lightbox[group]">group 1</a><br/>
+			<a href="./images/image-4.jpg" rel="lightbox[group]">group 2</a><br/>
+			<a href="./images/image-5.jpg" title="This is another caption" rel="lightbox[group]">group 3</a><br/>
+			<a href="./images/image-6.jpg" title="This is my caption" rel="lightbox[group]">group 4</a>
 		</p>
 	</body>
 </html>

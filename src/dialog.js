@@ -44,7 +44,10 @@ Dialog = {
 };
 
 Dialog.Base = Class.create({
-	defaultOptions: {},
+	defaultOptions: {
+		coverOpacity: 0.4,
+		coverDuration: 0.15
+	},
 	
 	initialize: function(options) {
 		this.options = Object.serialExtend({}, this.defaultOptions, options);
@@ -55,7 +58,7 @@ Dialog.Base = Class.create({
 	create: function() {
 		this.createElements();
 		document.body.appendChild(this.modalCover);
-		document.body.appendChild(this.dialog);
+		document.body.appendChild(this.dialogWrapper);
 		this.afterCreate();
 	},
 	
@@ -69,6 +72,10 @@ Dialog.Base = Class.create({
 		if (this.options.dialogClass) {
 			this.dialog.addClassName(this.options.dialogClass);
 		}
+		this.dialogContents = new Element('div', {id: 'dialog_contents'});
+		this.dialog.appendChild(this.dialogContents);
+		this.dialogWrapper = new Element('div', {id: 'dialog_wrapper'});
+		this.dialogWrapper.appendChild(this.dialog);
 		this.setContents();
 	},
 	
@@ -92,18 +99,40 @@ Dialog.Base = Class.create({
 	},
 	
 	showCover: function() {
-		this.modalCover.visualEffect('fade', {from: 0.1, to: 0.4, duration: 0.15});
+		this.modalCover.visualEffect('fade', {
+			from: 0.1, to: this.options.coverOpacity,
+			duration: this.options.coverDuration,
+			queue: {position: 'end', scope: 'dialog'
+		}});
 	},
 	
 	showDialog: function() {
 		Dialog.onCallback('beforeShow');
-		this.dialog.visualEffect('appear', {duration: 0.4, afterFinish: function() {
+		this.dialog.visualEffect('appear', {duration: 0.4, queue: {position: 'end', scope: 'dialog'}, afterFinish: function() {
 			Dialog.onCallback('afterShow');
 		}});
 	},
 	
+	resizeDialog: function(newWidth, newHeight) {
+		var currentDims = this.dialog.getDimensions();
+		currentDims.width = currentDims.width - 20; // hacky
+		currentDims.height = currentDims.height - 20;
+		if (currentDims.width == newWidth && currentDims.height == newHeight) return;
+		var currentTop = parseFloat(this.dialogWrapper.getStyle('top'));
+		
+		var newTop = currentTop + (currentDims.height - newHeight)/2;
+		this.dialogWrapper.morph('top:' + newTop + 'px;', {queue: 'front', duration: 0.6});
+		this.dialog.morph('width:' + newWidth + 'px;height:' + newHeight + 'px;', {duration: 0.6, queue: {position: 'end', scope: 'dialog'}});
+	},
+	
 	setContents: function() {
 		// Override to set dialog contents
+	},
+	
+	addElement: function() {
+		$A(arguments).each(function(e) {
+			this.dialogContents.appendChild(e);
+		}, this);
 	},
 	
 	layout: function() {
@@ -116,9 +145,8 @@ Dialog.Base = Class.create({
 			dialogTop += verticalScroll;
 			this.modalCover.setStyle({top: verticalScroll + 'px'});
 		}
-		this.dialog.setStyle({
-			top: dialogTop + 'px',
-			left: ((pageDims.width - dialogDims.width)/2) + 'px'
+		this.dialogWrapper.setStyle({
+			top: dialogTop + 'px'
 		});
 	},
 	

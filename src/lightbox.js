@@ -1,18 +1,17 @@
 DialogOptions.Lightbox = Object.extend({
 	loadImage: '/images/loading.gif',
-	closeImage: '/images/close.gif',
-	nextImage: '/images/next.gif',
-	prevImage: '/images/prev.gif',
+	closeImage: '/images/closelabel.gif',
+	nextImage: '/images/nextlabel.gif',
+	prevImage: '/images/prevlabel.gif',
 	dialogClass: 'lightbox'
 }, window.DialogOptions && window.DialogOptions.Lightbox || {});
 
 Dialog.Lightbox = Class.create(Dialog.Base, {
 	defaultOptions: Object.serialExtend({}, Dialog.Base.prototype.defaultOptions, {
-		dialogClass: 'lightbox'
+		dialogClass: 'lightbox',
+		coverOpacity: 0.8,
+		coverDuration: 0.3
 	}),
-	
-	currentImage: 0,
-	images: [],
 	
 	initialize: function($super, options) {
 		$super(options);
@@ -25,9 +24,11 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 	},
 	
 	findGroupImages: function() {
+		this.images = [];
 		var current = this.options.start;
 		if (current.rel == 'lightbox') {
 			this.images.push({src: current.href, caption: current.title});
+			this.currentImage = 0;
 		} else {
 			$$(current.tagName + '[href][rel="' + current.rel + '"]').each(function (e, index) {
 				this.images.push({src: e.href, caption: e.title});
@@ -40,19 +41,104 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 	},
 			
 	createElements: function($super) {
+		this.createNavigation();
+		this.createPanel();
 		$super();
 		this.modalCover.observe('click', Dialog.closer);
+		this.dialogWrapper.observe('click', Dialog.closer);
+		this.dialog.observe('click', Dialog.emptyEventHandler);
 		this.image = new Element('img', {id: 'lightbox_image'}).hide();
-		this.dialog.appendChild(this.image);
+		this.addElement(this.image);
+		if (this.images.size() > 1) {
+			this.addElement(this.prevLink);
+			this.addElement(this.nextLink);
+		}
+		this.addElement(this.panel)
+	},
+	
+	createNavigation: function() {
+		if (this.images.size() == 1) return;
+		this.prevLink = new Element('a', {id: 'lightbox_prev'}).hide();
+		this.prevLink.observe('click', this.showPrev.bind(this));
+		this.prevLink.observe('mouseover', function() {
+			this.prevLink.setStyle({backgroundImage: 'url(' + DialogOptions.Lightbox.prevImage + ')'});
+		}.bind(this));
+		this.prevLink.observe('mouseout', function() {
+			this.prevLink.setStyle({backgroundImage: 'none'});
+		}.bind(this));
+		this.nextLink = new Element('a', {id: 'lightbox_next'}).hide();
+		this.nextLink.observe('click', this.showNext.bind(this));
+		this.nextLink.observe('mouseover', function() {
+			this.nextLink.setStyle({backgroundImage: 'url(' + DialogOptions.Lightbox.nextImage + ')'});
+		}.bind(this));
+		this.nextLink.observe('mouseout', function() {
+			this.nextLink.setStyle({backgroundImage: 'none'});
+		}.bind(this));
+	},
+	
+	showPrev: function(event) {
+		event.stop();
+		this.loadContents(this.currentImage - 1);
+	},
+	
+	showNext: function(event) {
+		event.stop();
+		this.loadContents(this.currentImage + 1);
+	},
+	
+	loadContents: function(index) {
+		if (this.images.size() > 1) {
+			this.prevLink.hide();
+			this.nextLink.hide();
+		}
+		this.panel.blindUp({duration: 0.4, queue: {position: 'end', scope: 'dialog'}});
+		this.image.fade({duration: 0.4, queue: {position: 'end', scope: 'dialog'}, afterFinish: function() {
+			this.startLoading();
+			this.preloadImage(index);
+		}.bind(this)});
+	},
+	
+	createPanel: function() {
+		this.panel = new Element('div', {id: 'lightbox_panel'}).hide();
+		var closeLink = new Element('a', {id: 'lightbox_close_link'});
+		closeLink.observe('click', Dialog.closer);
+		closeLink.appendChild(new Element('img', {src: DialogOptions.Lightbox.closeImage}));
+		this.panel.appendChild(closeLink);
+		var caption = new Element('p', {id: 'lightbox_caption'});
+		this.panel.appendChild(caption);
+		this.setCaption(caption);
+		if (this.images.size() > 1) {
+			var numberDisplay = new Element('p', {id: 'lightbox_number_display'});
+			this.setNumberDisplay(numberDisplay);
+			this.panel.appendChild(numberDisplay);
+		}
+		this.panel.appendChild(new Element('br', {className: 'clear'}));
 	},
 	
 	setContents: function() {
 		this.startLoading();
 	},
 	
+	setCaption: function(caption) {
+		caption.update(this.images[this.currentImage].caption);
+	},
+	
+	setNumberDisplay: function(display) {
+		if (this.images.size() == 1) return;
+		display.update('Image ' + (this.currentImage + 1) + ' of ' + this.images.size());
+	},
+	
 	showContents: function() {
 		this.image.src = this.images[this.currentImage].src;
-		this.image.appear({duration: 0.4, queue: {position: 'end', scope: 'dialog'}});
+		this.image.appear({duration: 0.4, queue: {position: 'end', scope: 'dialog'}, afterFinish: function() {
+			if (this.images.size() > 1) {
+				if (this.currentImage > 0) this.prevLink.show();
+				if (this.currentImage < this.images.size() - 1) this.nextLink.show();
+			}
+		}.bind(this)});
+		this.setCaption(this.panel.down('p#lightbox_caption'));
+		this.setNumberDisplay(this.panel.down('p#lightbox_number_display'));
+		this.panel.blindDown({duration: 0.4, queue: {position: 'end', scope: 'dialog'}});
 		this.loadNeighbours();
 	},
 	
@@ -70,29 +156,18 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 		this.currentImage = index;
 		var preloader = new Image();
 		preloader.onload = function() {
+			this.stopLoading();
+			this.panel.setStyle({width: preloader.width + 'px'});
 			this.resizeDialog(preloader.width, preloader.height);
 			this.showContents();
 		}.bind(this);
 		preloader.src = this.images[index].src;
 	},
 	
-	resizeDialog: function(newWidth, newHeight) {
-		this.stopLoading();
-		var currentDims = this.dialog.getDimensions();
-		var pageDims = document.viewport.getDimensions();
-		if (currentDims.width == newWidth || currentDims.height == newHeight) return;
-		var currentLeft = parseFloat(this.dialog.getStyle('left'));
-		var currentTop = parseFloat(this.dialog.getStyle('top'));
-		
-		var newLeft = currentLeft + (currentDims.width - newWidth)/2;
-		var newTop = currentTop + (currentDims.height - newHeight)/2;
-		this.dialog.morph('left:' + newLeft + 'px;top:' + newTop + 'px;width:' + newWidth + 'px;height:' + newHeight + 'px;', {duration: 0.6, queue: {position: 'front', scope: 'dialog'}});
-	},
-	
 	startLoading: function() {
 		if (!this.loadImage) {
 			this.loadImage = new Element('img', {src: DialogOptions.Lightbox.loadImage, id: 'lightbox_loading'});
-			this.dialog.appendChild(this.loadImage);
+			this.addElement(this.loadImage);
 		}
 		this.loadImage.show();
 	},

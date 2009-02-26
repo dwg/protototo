@@ -20,14 +20,14 @@ Dialog.Alert = Class.create(Dialog.Buttons, {
 		}
 		[this.options.contents].flatten().each(function(c) {
 			if (Object.isElement(c)) {
-				this.dialog.appendChild()
+				this.addElement(c);
 			} else if (Object.isString(c)) {
 				if (/(<[^>]+>.*<\/[^>]+>)|(<[^\/]+\/>)/.test(c)) {
 					var root = document.createElement('div');
 					root.innerHTML = c;
-					this.dialog.appendChild(root.childNodes[0]);
+					this.addElement(root.childNodes[0]);
 				} else {
-					this.dialog.appendChild(document.createTextNode(c));
+					this.addElement(document.createTextNode(c));
 				}
 			}
 		}, this);

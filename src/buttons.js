@@ -20,6 +20,6 @@ Dialog.Buttons = Class.create(Dialog.Base, {
 			wrapper.appendChild(a);
 		});
 		wrapper.appendChild(new Element('br', {className: 'clear'}));
-		this.dialog.appendChild(wrapper);
+		this.addElement(wrapper);
 	}
 });

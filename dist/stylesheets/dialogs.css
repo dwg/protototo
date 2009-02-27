@@ -43,8 +43,9 @@
 		left: 50%;
 		margin: -11px 0 0 -63px;
 	}
-	#dialog.lightbox #lightbox_prev, #dialog.lightbox #lightbox_next {
-		width: 49%;
+	#dialog.lightbox #lightbox_prev, #dialog.lightbox #lightbox_next,
+	#dialog.lightbox #lightbox_play, #dialog.lightbox #lightbox_stop {
+		width: 33%;
 		height: 100%;
 		position: absolute;
 		top: 10px;
@@ -60,26 +61,39 @@
 			right: 0;
 			background-position: 100% 15%;
 		}
+		#dialog.lightbox #lightbox_play {
+			margin-left: 33%;
+			background-position: 50% 50%;
+		}
+		#dialog.lightbox #lightbox_stop {
+			width: 99%;
+			background-position: 50% 50%;
+		}
 	#dialog.lightbox #lightbox_panel {
 		background-color: #fff;
 		position: relative;
-		padding: 10px;
+		padding: 0 10px;
 		left: -10px;
 		}
 		#dialog.lightbox #lightbox_panel p {
-			margin: 0;
+			margin: 10px 0;
 			width: 70%;
 			float: left;
 			font-weight: bold;
 			font-size: 77%;
 			color: #666;
 			}
+			#dialog.lightbox #lightbox_panel p#lightbox_caption {
+				margin-bottom: 0;
+			}
 			#dialog.lightbox #lightbox_panel p#lightbox_number_display {
+				margin-top: 0;
 				clear: left;
 				font-weight: normal;
 			}
 		#dialog.lightbox #lightbox_panel a {
 			width: 66px;
+			margin: 10px 0;
 			float: right;
 			cursor: pointer;
 			}

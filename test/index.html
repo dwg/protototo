@@ -6,7 +6,6 @@
 		<script type="text/javascript" src="./javascripts/prototype.js"></script>
 		<script type="text/javascript" src="./javascripts/effects.js"></script>
 		<script type="text/javascript" src="./javascripts/lowpro.js"></script>
-		<script type="text/javascript" src="../dist/dialogs.js"></script>
 		<script type="text/javascript">
 //<![CDATA[
 DialogOptions = {
@@ -17,56 +16,89 @@ DialogOptions = {
 		closeImage: '../dist/images/closelabel.gif',
 		loadImage: './images/big_loading.gif',
 		nextImage: '../dist/images/nextlabel.gif',
-		prevImage: '../dist/images/prevlabel.gif'
+		prevImage: '../dist/images/prevlabel.gif',
+		playImage: '../dist/images/playlabel.gif',
+		stopImage: '../dist/images/stoplabel.gif'
 	}	
 };
-(function() {
-	Event.addBehavior({
-		'a[href][rel^=lightbox]:click': function(event) {
-			if (this.href) {
-				event.stop();
-				new Dialog.Lightbox({start: this});
-			}
-		},
-		
-		'a#alert:click': function(event) {
+//]]>
+		</script>
+		<script type="text/javascript" src="../dist/dialogs.js"></script>
+		<script type="text/javascript">
+//<![CDATA[
+Event.addBehavior({
+	'a[href][rel^=lightbox]:click': function(event) {
+		if (this.href) {
 			event.stop();
-			new Dialog.Alert();
-		},
-		'a#confirm:click': function(event) {
-			event.stop();
-			new Dialog.Confirm();
-		},
-		'a#multi:click': function(event) {
-			event.stop();
-			new Dialog.Buttons({
-				button1Text: 'Button 1',
-				onButton1: Dialog.emptyEventHandler,
-				button2Text: 'Button 2',
-				onButton2: Dialog.emptyEventHandler,
-				button3Text: 'Button 3',
-				onButton3: Dialog.emptyEventHandler,
-				button4Text: 'Button 4',
-				onButton4: Dialog.emptyEventHandler,
-				button5Text: 'Button 5',
-				onButton5: Dialog.emptyEventHandler,
-				okayText: 'OK',
-				onOkay: Dialog.emptyEventHandler,
-				cancelText: 'Cancel',
-				onCancel: Dialog.closer
-			});
+			new Dialog.Lightbox({start: this});
 		}
-	});
-})();
+	},
+	
+	'a#alert:click': function(event) {
+		event.stop();
+		new Dialog.Alert();
+	},
+	'a#confirm:click': function(event) {
+		event.stop();
+		new Dialog.Confirm();
+	},
+	'a#multi:click': function(event) {
+		event.stop();
+		new Dialog.Buttons({
+			button1Text: 'Button 1',
+			onButton1: Dialog.emptyEventHandler,
+			button2Text: 'Button 2',
+			onButton2: Dialog.emptyEventHandler,
+			button3Text: 'Button 3',
+			onButton3: Dialog.emptyEventHandler,
+			button4Text: 'Button 4',
+			onButton4: Dialog.emptyEventHandler,
+			button5Text: 'Button 5',
+			onButton5: Dialog.emptyEventHandler,
+			okayText: 'OK',
+			onOkay: Dialog.emptyEventHandler,
+			cancelText: 'Cancel',
+			onCancel: Dialog.closer
+		});
+	}
+});
 //]]>
 		</script>
 		<style type="text/css">
 			body {
 				height: 1000px;
+				font-family: "Helvetica Neue", Arial, Helvetica, clean, sans-serif;
+				font-size: 13px;
+				font-size-adjust: none;
+				font-style: normal;
+				font-weight: normal;
+				line-height: 1.231;
+			}
+			p {
+				font-size: 108%;
 			}
 			
 			#dialog.lightbox img#lightbox_loading {
 				margin: -64px 0 0 -64px;
+			}
+			
+			#bea_2ja {
+				background-color: #000;
+				padding: 20px;
+				width: 558px;
+				}
+				#bea_2ja p {
+					float: left;
+					border: 10px solid #fff;
+					border-bottom: 25px solid #fff;
+					margin: 10px;
+				}
+				#bea_2ja a img {
+					border: none;
+				}
+
+			.clear {
+				clear: both;
 			}
 		</style>
 	</head>
@@ -83,5 +115,26 @@ DialogOptions = {
 			<a href="./images/image-5.jpg" title="This is another caption" rel="lightbox[group]">group 3</a><br/>
 			<a href="./images/image-6.jpg" title="This is my caption" rel="lightbox[group]">group 4</a>
 		</p>
+		<div id="bea_2ja">
+			<p>
+				<a href="http://lh5.ggpht.com/_lfJzIygx9ec/SW8dBU7cseI/AAAAAAAAD-E/53gw-vj4V3w/s800/IMG_3123.JPG" title="Að opna pakkana frá mömmu og pabba að morgni afmælisdagsins" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/1_thumb.jpg" alt=""/></a>
+			</p>
+			<p>
+				<a href="http://lh6.ggpht.com/_lfJzIygx9ec/SW8dC5tTqdI/AAAAAAAAD-M/L2K5lzCHUp4/s800/IMG_3124.JPG" title="Voða spennandi" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/2_thumb.JPG" alt=""/></a>
+			</p>
+			<p>
+				<a href="http://lh3.ggpht.com/_lfJzIygx9ec/SW8dDsOFxGI/AAAAAAAAD-U/2jA0Iv7C1zY/s800/IMG_3127.JPG" title="Vááá" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/3_thumb.JPG" alt=""/></a>
+			</p>
+			<p>
+				<a href="http://lh3.ggpht.com/_lfJzIygx9ec/SW8dEx30WvI/AAAAAAAAD-c/pMn9ctYQars/s800/IMG_3128.JPG" title="Gekk mikið betur að opna hinn pakkann" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/4_thumb.JPG" alt=""/></a>
+			</p>
+			<p>
+				<a href="http://lh5.ggpht.com/_lfJzIygx9ec/SW8dGIDRJfI/AAAAAAAAD-k/K_mO5-h9-I4/s800/IMG_3129.JPG" title="Fékk Hr. Kartöfluhaus frá afa Bebba" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/5_thumb.JPG" alt=""/></a>
+			</p>
+			<p>
+				<a href="http://lh4.ggpht.com/_lfJzIygx9ec/SW8dHmUq1II/AAAAAAAAD-w/9w2QlXwvnm0/s800/IMG_3130.JPG" title="Getur dundað sér heillengi við að setja hann saman á mismunandi vegu" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/6_thumb.JPG" alt=""/></a>
+			</p>
+			<br class="clear"/>
+		</div>
 	</body>
 </html>

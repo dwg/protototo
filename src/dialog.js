@@ -145,13 +145,22 @@ Dialog.Base = Class.create({
 			dialogTop += verticalScroll;
 			this.modalCover.setStyle({top: verticalScroll + 'px'});
 		}
-		this.dialogWrapper.setStyle({
-			top: dialogTop + 'px'
-		});
+		if (this.dialog.visible()) {
+			var currentTop = parseFloat(this.dialogWrapper.getStyle('top') || 0);
+			var speed = 200; // px per second
+			this.dialogWrapper.morph('top:' + dialogTop + 'px;', {
+				queue: {position: 'end', scope: 'dialog'},
+				duration: Math.abs(dialogTop - currentTop)/speed
+			});
+		} else {
+			this.dialogWrapper.setStyle({
+				top: dialogTop + 'px'
+			});
+		}
 	},
 	
 	close: function() {
-		this.dialog.visualEffect('fade', {duration: 0.2, afterFinish: function() { Dialog.close(); }});
+		this.dialog.fade({duration: 0.2, afterFinish: function() { Dialog.close(); }});
 	}
 });
 

@@ -154,12 +154,14 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 	showContents: function() {
 		this.image.src = this.images[this.currentImage].src;
 		this.image.appear({duration: 0.4, queue: {position: 'end', scope: 'dialog'}, afterFinish: function() {
-			if (this.images.size() > 1 && !this.playing) {
-				if (this.currentImage > 0) this.prevLink.show();
-				this.playLink.show();
-				if (this.currentImage < this.images.size() - 1) this.nextLink.show();
-			} else {
-				this.stopLink.show();
+			if (this.images.size() > 1) {
+				if (this.playing) {
+					this.stopLink.show();
+				} else {
+					if (this.currentImage > 0) this.prevLink.show();
+					this.playLink.show();
+					if (this.currentImage < this.images.size() - 1) this.nextLink.show();
+				}
 			}
 		}.bind(this)});
 		this.setCaption(this.panel.down('p#lightbox_caption'));

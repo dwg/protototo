@@ -18,7 +18,7 @@ Dialog = {
 	close: function() {
 		this.onCallback('onClose');
 		this.clearObservers;
-		[Dialog.current.modalCover, Dialog.current.dialog].each(function(e) {e.remove();});
+		[Dialog.current.modalCover, Dialog.current.dialogWrapper].each(function(e) {e.remove();});
 		Dialog.current = null;
 	},
 	

@@ -5,6 +5,7 @@ DialogOptions = Object.extend({
 
 Dialog = {
 	_stylesheetsIncluded: false,
+	queue: [],
 	
 	clearObservers: function() {
 		if (!Dialog.resizeObserver) return;
@@ -40,6 +41,20 @@ Dialog = {
 	
 	emptyEventHandler: function(event) {
 		event.stop();
+	},
+	
+	push: function() {
+		if (!Dialog.current) return;
+		Dialog.queue.push(Dialog.current);
+		Dialog.current.removeContent();
+		Dialog.current = null;
+	},
+	
+	pop: function() {
+		if (Dialog.queue.size() == 0) return;
+		Dialog.current = Dialog.queue.pop();
+		Dialog.current.addContentElement();
+		Dialog.current.showContent();
 	}
 };
 
@@ -51,8 +66,11 @@ Dialog.Base = Class.create({
 	
 	initialize: function(options) {
 		this.options = Object.serialExtend({}, this.defaultOptions, options);
-		// TODO: handle dialog from dialog
-		this.create();
+		if (Dialog.current) {
+			this.copy();
+		} else {
+			this.create();
+		}
 	},
 	
 	create: function() {
@@ -60,6 +78,18 @@ Dialog.Base = Class.create({
 		document.body.appendChild(this.modalCover);
 		document.body.appendChild(this.dialogWrapper);
 		this.afterCreate();
+	},
+	
+	copy: function() {
+		var current = Dialog.current;
+		Dialog.push();
+		// TODO: dialogClass
+		$w('modalCover dialog dialogWrapper').each(function(e) { this[e] = current[e]; }, this);
+		this.createContentElement();
+		this.addContentElement();
+		this.setContents();
+		this.showContent();
+		Dialog.current = this;
 	},
 	
 	createElements: function() {
@@ -72,11 +102,19 @@ Dialog.Base = Class.create({
 		if (this.options.dialogClass) {
 			this.dialog.addClassName(this.options.dialogClass);
 		}
-		this.dialogContents = new Element('div', {id: 'dialog_contents'});
-		this.dialog.appendChild(this.dialogContents);
+		this.createContentElement();
 		this.dialogWrapper = new Element('div', {id: 'dialog_wrapper'});
 		this.dialogWrapper.appendChild(this.dialog);
 		this.setContents();
+	},
+	
+	createContentElement: function() {
+		this.dialogContents = new Element('div', {id: 'dialog_contents'});
+		this.addContentElement();
+	},
+	
+	addContentElement: function() {
+		this.dialog.appendChild(this.dialogContents);
 	},
 	
 	afterCreate: function() {
@@ -142,7 +180,8 @@ Dialog.Base = Class.create({
 		var dialogTop = (pageDims.height - dialogDims.height)/2;
 		if (Prototype.Browser.ltIE7) {
 			var verticalScroll = document.viewport.getScrollOffsets().top;
-			dialogTop += verticalScroll;
+			dialogTop += vertithis.dialogContents = new Element('div', {id: 'dialog_contents'});
+		this.dialog.appendChild(this.dialogContents);calScroll;
 			this.modalCover.setStyle({top: verticalScroll + 'px'});
 		}
 		if (this.dialog.visible()) {
@@ -160,7 +199,29 @@ Dialog.Base = Class.create({
 	},
 	
 	close: function() {
-		this.dialog.fade({duration: 0.2, afterFinish: function() { Dialog.close(); }});
+		if (Dialog.queue.size() == 0) {
+			this.dialog.fade({duration: 0.2, afterFinish: function() { Dialog.close(); }});
+		} else {
+			this.removeContent();
+			Dialog.pop();
+		}
+	},
+	
+	removeContent: function() {
+		this.dialogContents.fade({
+			duration: 0.2, queue: {position: 'end', scope: 'dialog'},
+			afterFinish: function() {
+				this.dialogContents.remove();
+			}.bind(this)});
+	},
+	
+	showContent: function(options) {
+		// TODO: preserve style width
+		var dims = this.dialogContents.getDimensions();
+		this.resizeDialog(dims.width, dims.height);
+		// TODO: beforeShow
+		this.dialogContents.appear({duration: 0.4, queue: {position: 'end', scope: 'dialog'}});
+		// TODO: afterShow
 	}
 });
 

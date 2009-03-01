@@ -1,7 +1,7 @@
 Dialog.Buttons = Class.create(Dialog.Base, {
 	defaultOptions: Object.extend({}, Dialog.Base.prototype.defaultOptions),
 	
-	createElements: function($super) {
+	setContents: function($super) {
 		$super();
 		this.addButtons();
 	},

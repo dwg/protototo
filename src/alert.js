@@ -14,7 +14,7 @@ Dialog.Alert = Class.create(Dialog.Buttons, {
 		}
 	},
 	
-	setContents: function() {
+	setContents: function($super) {
 		if (this.options.closeOnOkay) {
 			this.options.onOkay = this._wrapInCloser(this.options.onOkay);
 		}
@@ -31,6 +31,7 @@ Dialog.Alert = Class.create(Dialog.Buttons, {
 				}
 			}
 		}, this);
+		$super();
 	}
 });
 

@@ -60,6 +60,15 @@ Event.addBehavior({
 			cancelText: 'Cancel',
 			onCancel: Dialog.closer
 		});
+	},
+	'a#dual:click': function(event) {
+		event.stop();
+		var link = $a({href: '#'}, 'Pop me up');
+		link.observe('click', function(event) {
+			event.stop();
+			new Dialog.Alert({contents: 'This is some longer text so that the two dialogs are not the same size'});
+		});
+		new Dialog.Confirm({contents: link});
 	}
 });
 //]]>
@@ -106,7 +115,8 @@ Event.addBehavior({
 		<p>
 			<a id="alert" href="#">Show me an alert</a><br/>
 			<a id="confirm" href="#">Show me a confirm</a><br/>
-			<a id="multi" href="#">Show me an multi-button dialog</a><br/>
+			<a id="multi" href="#">Show me a multi-button dialog</a><br/>
+			<a id="dual" href="#">Show me pop within pop</a><br/>
 			<a href="./images/money.jpg" title="This is my caption" rel="lightbox">Show me the money</a><br/>
 			<a href="http://www.lokeshdhakar.com/projects/lightbox2/images/image-1.jpg" title="This is a really really really really looooooooong caption with lots of words and stuff" rel="lightbox[group]">From outside</a><br/>
 			<a href="http://www.totil.com/files/images/kort_cph_big.preview.jpg" rel="lightbox[group]">From outside 2</a><br/>

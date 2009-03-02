@@ -180,8 +180,7 @@ Dialog.Base = Class.create({
 		var dialogTop = (pageDims.height - dialogDims.height)/2;
 		if (Prototype.Browser.ltIE7) {
 			var verticalScroll = document.viewport.getScrollOffsets().top;
-			dialogTop += vertithis.dialogContents = new Element('div', {id: 'dialog_contents'});
-		this.dialog.appendChild(this.dialogContents);calScroll;
+			dialogTop += verticalScroll;
 			this.modalCover.setStyle({top: verticalScroll + 'px'});
 		}
 		if (this.dialog.visible()) {

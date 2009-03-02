@@ -1,6 +1,6 @@
 DialogOptions = Object.extend({
 	stylesheetPath: '/stylesheets/dialogs.css',
-	ie6StylesheetPath: '/stylesheets/dialogs_ie6.css',
+	ie6StylesheetPath: '/stylesheets/dialogs_ie6.css'
 }, window.DialogOptions || {});
 
 Dialog = {

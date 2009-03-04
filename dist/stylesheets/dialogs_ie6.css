@@ -1,9 +1,9 @@
 #modal_cover {
 	position: absolute;
-	filter: alpha(opacity=0.15);
+	zoom: 1;
 }
 
-#dialog {
+#dialog_wrapper {
 	position: absolute;
 }
 
@@ -16,4 +16,12 @@
 	filter: mask();
 	width: 3000px;
 	height: 3000px;
+}
+
+#dialog.lightbox #lightbox_panel {
+	padding: 0;
+	left: 0;
+}
+#dialog.lightbox #lightbox_panel a {
+	margin-bottom: 0;
 }

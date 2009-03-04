@@ -10,8 +10,9 @@
 //<![CDATA[
 DialogOptions = {
 	stylesheetPath: '../dist/stylesheets/dialogs.css',
+	ieStylesheetPath: '../dist/stylesheets/dialogs_ie.css',
 	ie6StylesheetPath: '../dist/stylesheets/dialogs_ie6.css',
-	
+
 	Lightbox: {
 		closeImage: '../dist/images/closelabel.gif',
 		loadImage: './images/big_loading.gif',
@@ -19,7 +20,7 @@ DialogOptions = {
 		prevImage: '../dist/images/prevlabel.gif',
 		playImage: '../dist/images/playlabel.gif',
 		stopImage: '../dist/images/stoplabel.gif'
-	}	
+	}
 };
 //]]>
 		</script>
@@ -28,12 +29,10 @@ DialogOptions = {
 //<![CDATA[
 Event.addBehavior({
 	'a[href][rel^=lightbox]:click': function(event) {
-		if (this.href) {
-			event.stop();
-			new Dialog.Lightbox({start: this});
-		}
+		event.stop();
+		new Dialog.Lightbox({start: this});
 	},
-	
+
 	'a#alert:click': function(event) {
 		event.stop();
 		new Dialog.Alert();
@@ -86,11 +85,11 @@ Event.addBehavior({
 			p {
 				font-size: 108%;
 			}
-			
+
 			#dialog.lightbox img#lightbox_loading {
 				margin: -64px 0 0 -64px;
 			}
-			
+
 			#bea_2ja {
 				background-color: #000;
 				padding: 20px;

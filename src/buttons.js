@@ -7,6 +7,7 @@ Dialog.Buttons = Class.create(Dialog.Base, {
 	},
 	
 	addButtons: function() {
+		// TODO: fix button alignment to bottom
 		var buttonOptions = $H(this.options).keys().grep(/Text$/).inject({}, function(acc, k) {
 			acc[this.options[k]] = this.options['on' + k.gsub(/Text/, '').capitalize()];
 			return acc;

@@ -5,8 +5,7 @@ DialogOptions.Lightbox = Object.extend({
 	prevImage: '/images/prevlabel.gif',
 	playImage: '/images/playlabel.gif',
 	stopImage: '/images/stoplabel.gif',
-	playSpeed: 5,
-	dialogClass: 'lightbox'
+	playSpeed: 5 //seconds
 }, window.DialogOptions && window.DialogOptions.Lightbox || {});
 
 Dialog.Lightbox = Class.create(Dialog.Base, {
@@ -67,10 +66,11 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 			var link = new Element('a', {id: 'lightbox_' + dir}).hide();
 			link.observe('click', this[dir].bind(this));
 			link.observe('mouseover', function() {
+				link._bgimage = link.getStyle('backgroundImage');
 				link.setStyle({backgroundImage: 'url(' + DialogOptions.Lightbox[dir + 'Image'] + ')'});
 			}.bind(this));
 			link.observe('mouseout', function() {
-				link.setStyle({backgroundImage: 'none'});
+				link.setStyle({backgroundImage: link._bgimage || 'none'});
 			}.bind(this));
 			this[dir + 'Link'] = link;
 		}, this);
@@ -91,6 +91,7 @@ Dialog.Lightbox = Class.create(Dialog.Base, {
 		event.stop();
 		this.playing = true;
 		this.playStep();
+		// TODO: IE6 renders height incorrectly when hiding and showing navigation
 		$$('#lightbox_next, #lightbox_prev, #lightbox_play').invoke('hide');
 		this.stopLink.show();
 	},

@@ -103,6 +103,10 @@
 				border: none;
 			}
 
+#dialog.flash #dialog_contents img { float: left; }
+#dialog.flash #flash_contents {	margin-left: 130px; }
+#dialog.flash #flash_contents img { float: none; }
+
 #dialog .clear {
 	clear: both;
 }

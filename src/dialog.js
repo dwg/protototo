@@ -1,5 +1,6 @@
 DialogOptions = Object.extend({
 	stylesheetPath: '/stylesheets/dialogs.css',
+	ieStylesheetPath: '/stylesheets/dialogs_ie.css',
 	ie6StylesheetPath: '/stylesheets/dialogs_ie6.css'
 }, window.DialogOptions || {});
 
@@ -18,9 +19,12 @@ Dialog = {
 	
 	close: function() {
 		this.onCallback('onClose');
-		this.clearObservers;
-		[Dialog.current.modalCover, Dialog.current.dialogWrapper].each(function(e) {e.remove();});
-		Dialog.current = null;
+		this.clearObservers();
+		if (Dialog.current) {
+			[Dialog.current.modalCover, Dialog.current.dialogWrapper].invoke('remove');
+			Dialog.current = null;
+		}
+		Dialog.closing = false;
 	},
 	
 	onCallback: function(callback) {
@@ -30,6 +34,7 @@ Dialog = {
 	_includeStylesheets: function() {
 		if (Dialog._stylesheetsIncluded) return;
 		Stylesheet.include(DialogOptions.stylesheetPath);
+		if (Prototype.Browser.IE) Stylesheet.include(DialogOptions.ieStylesheetPath);
 		if (Prototype.Browser.ltIE7) Stylesheet.include(DialogOptions.ie6StylesheetPath);
 		Dialog._stylesheetsIncluded = true;
 	},
@@ -65,7 +70,7 @@ Dialog.Base = Class.create({
 	},
 
 	initialize: function(options) {
-		this.options = Object.serialExtend({}, this.defaultOptions, options);
+		this.setOptions(options);
 		if (Dialog.current) {
 			if (Dialog.closing) {
 				var f = function() {
@@ -82,6 +87,10 @@ Dialog.Base = Class.create({
 		} else {
 			this.create();
 		}
+	},
+
+	setOptions: function(options) {
+		this.options = Object.serialExtend({}, this.defaultOptions, options);
 	},
 
 	create: function() {
@@ -211,7 +220,7 @@ Dialog.Base = Class.create({
 	close: function() {
 		if (Dialog.queue.size() == 0) {
 			Dialog.closing = true;
-			this.dialog.fade({duration: 0.2, afterFinish: function() { Dialog.close(); }});
+			this.dialog.fade({duration: 0.4, afterFinish: function() { Dialog.close(); }});
 		} else {
 			this.removeContent();
 			Dialog.pop();
@@ -235,5 +244,5 @@ Dialog.Base = Class.create({
 		// TODO: afterShow
 	}
 });
-
+// TODO: this causes IE warning, load on first opened dialog instead
 document.observe('dom:loaded', Dialog._includeStylesheets);

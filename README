@@ -1,5 +1,5 @@
 Work in progress
 
 ==TODO:==
-* IE7 css opacity
-* IE6 bugged to hell
+* IE6 bug in lightbox showing/hiding navigation
+* Preserve width/height when showing dialog from dialog

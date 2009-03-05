@@ -76,6 +76,7 @@ Event.addBehavior({
 		new Dialog.Confirm({contents: link});
 	},
 	'a#flash:click': function(event) {
+		event.stop();
 		Dialog[this.className]('Flash Gordon strikes again');
 	}
 });

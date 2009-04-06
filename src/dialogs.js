@@ -1,5 +1,6 @@
 Dialogs = {
-	REQUIRED_PROTOTYPE: '1.6.0.3',
+	Version: '<%= DIALOGS_VERSION %>',
+	MinimumPrototypeVersion: '<%= REQUIRED_PROTOTYPE %>',
 
 	convertVersionString: function(versionString) {
 		var v = versionString.replace(/_.*|\./g, '');
@@ -10,24 +11,15 @@ Dialogs = {
 
 if((typeof Prototype=='undefined') || (typeof Element == 'undefined') ||
   (typeof Element.Methods=='undefined') ||
-  (Dialogs.convertVersionString(Prototype.Version) < Dialogs.convertVersionString(Dialogs.REQUIRED_PROTOTYPE))) {
-	throw("dialogs requires the Prototype JavaScript framework >= " + Dialogs.REQUIRED_PROTOTYPE);
+  (Dialogs.convertVersionString(Prototype.Version) < Dialogs.convertVersionString(Dialogs.MinimumPrototypeVersion))) {
+	throw("dialogs requires the Prototype JavaScript framework >= " + Dialogs.MinimumPrototypeVersion);
 }
-
 // NOTE: consider scriptaculous style loading of features
-
-<%= include 'base.js' %>
-
-<%= include 'stylesheet.js' %>
-
-<%= include 'dialog.js' %>
-
-<%= include 'buttons.js' %>
-
-<%= include 'alert.js' %>
-
-<%= include 'confirm.js' %>
-
-<%= include 'lightbox.js' %>
-
-<%= include 'flash.js' %>
+//= require "base"
+//= require "stylesheet"
+//= require "dialog"
+//= require "buttons"
+//= require "alert"
+//= require "confirm"
+//= require "lightbox"
+//= require "flash.js"

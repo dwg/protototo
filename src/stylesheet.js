@@ -9,9 +9,7 @@ Stylesheet = {
 	},
 	
 	findLink: function(path) {
-		return $$('link').detect(function(l) {
-			return new RegExp(path).test(l.readAttribute('href'));
-		});
+		return $$('link[href*=' + path + ']').size() > 0;
 	},
 	
 	linkTo: function(path, media) {

@@ -1,3 +1,7 @@
+DialogOptions.Buttons = Object.extend({
+	template: new Template('<a href="#" class="#{class}">#{text}</a>')
+}, window.DialogOptions && window.DialogOptions.Buttons || {});
+
 Dialog.Buttons = Class.create(Dialog.Base, {
 	defaultOptions: Object.extend({}, Dialog.Base.prototype.defaultOptions),
 	
@@ -8,19 +12,24 @@ Dialog.Buttons = Class.create(Dialog.Base, {
 	
 	addButtons: function() {
 		// TODO: fix button alignment to bottom
-		var buttonOptions = $H(this.options).keys().grep(/Text$/).inject({}, function(acc, k) {
-			acc[this.options[k]] = this.options['on' + k.gsub(/Text/, '').capitalize()];
+		var buttons = $H(this.options).keys().grep(/Text$/).inject([], function(acc, k) {
+			var key = k.sub(/Text$/, '')
+			var ukey = key.capitalize();
+			acc.push({text: this.options[key + 'Text'], 'class': this.options[key + 'Class'], onclick: this.options['on' + ukey]});
 			return acc;
 		}, this);
 		
 		var wrapper = new Element('p', {id: 'dialog_buttons'});
-		$H(buttonOptions).each(function(pair) {
-			var a = new Element('a', {href: '#'});
-			a.appendChild(document.createTextNode(pair.key));
-			Event.observe(a, 'click', pair.value);
-			wrapper.appendChild(a);
+		var builder = new Element('div');
+		buttons.each(function(button) {
+			builder.innerHTML = DialogOptions.Buttons.template.evaluate(button);
+			var b = builder.down();
+			b.observe('click', button.onclick);
+			wrapper.appendChild(b);
 		});
-		wrapper.appendChild(new Element('br', {className: 'clear'}));
 		this.addElement(wrapper);
+		if (wrapper.childElements().detect(function(e) {return e.getStyle('float') != 'none'})) {
+			wrapper.appendChild(new Element('br', {className: 'clear'}));
+		}
 	}
 });

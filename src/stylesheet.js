@@ -1,7 +1,8 @@
 Stylesheet = {
 	include: function(path) {
-		if (Stylesheet.isIncluded(path)) return;
-		$$('head').first().appendChild(Stylesheet.linkTo(path));
+		if (!Stylesheet.isIncluded(path)) {
+			$$('head').first().appendChild(Stylesheet.linkTo(path));
+		}
 	},
 	
 	isIncluded: function(path) {
@@ -9,7 +10,7 @@ Stylesheet = {
 	},
 	
 	findLink: function(path) {
-		return $$('link[href*=' + path + ']').size() > 0;
+		return $$('link[href*=' + path + ']').first();
 	},
 	
 	linkTo: function(path, media) {

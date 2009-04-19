@@ -14,12 +14,7 @@ if((typeof Prototype=='undefined') || (typeof Element == 'undefined') ||
   (Dialogs.convertVersionString(Prototype.Version) < Dialogs.convertVersionString(Dialogs.MinimumPrototypeVersion))) {
 	throw("dialogs requires the Prototype JavaScript framework >= " + Dialogs.MinimumPrototypeVersion);
 }
-// NOTE: consider scriptaculous style loading of features
-//= require "base"
+
+//= require "lang"
 //= require "stylesheet"
 //= require "dialog"
-//= require "buttons"
-//= require "alert"
-//= require "confirm"
-//= require "lightbox"
-//= require "flash.js"

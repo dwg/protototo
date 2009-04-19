@@ -3,6 +3,12 @@ new Test.Unit.Runner({
 		var stylesheet = $$('link[href=fixtures/stylesheet.css]').first();
 		this.assertIdentical(stylesheet, Stylesheet.findLink('fixtures/stylesheet.css'));
 		this.assertIdentical(stylesheet, Stylesheet.findLink('stylesheet.css'));
+		this.assertNull(Stylesheet.findLink('stylesheet'));
+	},
+	
+	testExtractNameFromPath: function() {
+		this.assertEqual(Stylesheet._extractNameFromPath('foo/bar/baz.css'), 'baz.css');
+		this.assertEqual(Stylesheet._extractNameFromPath('foo/bar/baz.css?moo'), 'baz.css');
 	},
 	
 	testIsIncluded: function() {

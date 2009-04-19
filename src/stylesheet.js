@@ -6,11 +6,27 @@ Stylesheet = {
 	},
 	
 	isIncluded: function(path) {
-		return !!Stylesheet.findLink(path);
+		return Stylesheet.findLink(path) != null;
 	},
 	
 	findLink: function(path) {
-		return $$('link[href*=' + path + ']').first();
+		var name = this._extractNameFromPath(path);
+		var links = $$('link[href*=' + path + ']').select(function(link) {
+			return name == Stylesheet._extractNameFromPath(link.href);
+		});
+		if (links.size() > 1 && console && console.warn) {
+			console.warn('Multiple links to stylesheet ' + name + ': ' + links.inspect());
+		}
+		return links.first() || null;
+	},
+	
+	_extractNameFromPath: function(path) {
+		var match = /[^\/]+\.css(?=\?|$)/.exec(path);
+		if (match) {
+			return match.first();
+		} else {
+			return null;
+		}
 	},
 	
 	linkTo: function(path, media) {

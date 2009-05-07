@@ -6,13 +6,8 @@ new Test.Unit.Runner({
 		this.assertNull(Stylesheet.findLink('stylesheet'));
 	},
 	
-	testExtractNameFromPath: function() {
-		this.assertEqual(Stylesheet._extractNameFromPath('foo/bar/baz.css'), 'baz.css');
-		this.assertEqual(Stylesheet._extractNameFromPath('foo/bar/baz.css?moo'), 'baz.css');
-	},
-	
-	testIsIncluded: function() {
-		this.assert(Stylesheet.isIncluded('fixtures/stylesheet.css'));
+	testLinked: function() {
+		this.assert(Stylesheet.linked('fixtures/stylesheet.css'));
 	},
 	
 	testLinkTo: function() {
@@ -31,8 +26,8 @@ new Test.Unit.Runner({
 		this.assertMatch(/bar\.css$/, link.href);
 	},
 	
-	testInclude: function() {
-		Stylesheet.include('foo.css');
-		this.assert(Stylesheet.isIncluded('foo.css'));
+	testLink: function() {
+		Stylesheet.link('foo.css');
+		this.assert(Stylesheet.linked('foo.css'));
 	}
 });

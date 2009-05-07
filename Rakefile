@@ -6,13 +6,21 @@ DIALOGS_DIST_DIR      = File.join(DIALOGS_ROOT, 'dist')
 DIALOGS_TEST_DIR      = File.join(DIALOGS_ROOT, 'test')
 DIALOGS_TEST_UNIT_DIR = File.join(DIALOGS_TEST_DIR, 'unit')
 DIALOGS_TMP_DIR       = File.join(DIALOGS_TEST_UNIT_DIR, 'tmp')
-DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_SRC_DIR, 'constants.yml')))['DIALOGS_VERSION']
+DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_ROOT, 'config', 'constants.yml')))['DIALOGS_VERSION']
 
 $:.unshift File.join(DIALOGS_ROOT, 'vendor', 'sprockets', 'lib')
 
 task :default => :dist
 
-def sprocketize path, source, destination=source
+desc "Clean the distribution folder"
+task :clean do
+  Dir.glob(File.join(DIALOGS_DIST_DIR, '*')).each do |file|
+    FileUtils.rm_rf(file)
+  end
+end
+
+desc "Builds the distribution."
+task :dist => :clean do
   begin
     require 'sprockets'
   rescue LoadError
@@ -23,17 +31,15 @@ def sprocketize path, source, destination=source
   end
   
   secretary = Sprockets::Secretary.new(
-    :root => File.join(DIALOGS_ROOT, path),
-    :load_path => [DIALOGS_SRC_DIR],
-    :source_files => [source]
+    :root => DIALOGS_ROOT,
+    :source_files => [File.join('src', 'dialogs.js')],
+    :load_path => ['config'],
+    :asset_root => 'dist',
+    :relative_require_only=>true
   )
   
-  secretary.concatenation.save_to(File.join(DIALOGS_DIST_DIR, destination))
-end
-
-desc "Builds the distribution."
-task :dist do
-  sprocketize('src', 'dialogs.js')
+  secretary.concatenation.save_to(File.join(DIALOGS_DIST_DIR, 'dialogs.js'))
+  secretary.install_assets
 end
 
 task :test => ['test:build', 'test:run']

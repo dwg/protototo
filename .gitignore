@@ -1,4 +1,5 @@
 .project
 .loadpath
-dist/dialogs.js
+dist/*
 test/unit/tmp/*
+.tmp_*

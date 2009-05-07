@@ -68,5 +68,3 @@ document.observe('dom:loaded', Dialog._includeStylesheets);
 //= require "dialog/buttons"
 //= require "dialog/alert"
 //= require "dialog/confirm"
-//= require "dialog/lightbox"
-//= require "dialog/flash"

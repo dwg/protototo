@@ -7,6 +7,10 @@
   <%= lib_files %>
   <%= css_fixtures %>
   <%= js_fixtures %>
+  <% if ENV['WITH_EFFECTS'] %>
+  <script charset="utf-8" type="text/javascript" src="fixtures/effects.js"></script>
+  <% end %>
+  <script charset="utf-8" type="text/javascript" src="fixtures/testunit_extensions.js"></script>
   <script charset="utf-8" type="text/javascript" src="fixtures/options.js"></script>
   <script charset="utf-8" type="text/javascript" src="assets/dialogs.js"></script>
   <%= test_file %>

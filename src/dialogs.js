@@ -1,5 +1,6 @@
 //= require <prototype>
 //= prefer <effects>
+//= provide "../assets"
 
 /*  Dialogs JavaScript framework, version <%= DIALOGS_VERSION %>
  *  (c) 2009 Arni Einarsson
@@ -7,9 +8,7 @@
  *  Dialogs is freely distributable under the terms of an MIT-style license.
  *--------------------------------------------------------------------------*/
 
-//= provide "../assets"
-
-Dialogs = {
+var Dialogs = {
 	Version: '<%= DIALOGS_VERSION %>',
 	MinimumPrototypeVersion: '<%= REQUIRED_PROTOTYPE %>'
 };
@@ -23,22 +22,13 @@ Dialogs = {
 		return versionString.indexOf('_') > -1 ? v-1 : v;
 	}
 	
-	if(Prototype === undef || Element === undef || Element.Methods === undef ||
+	if(window.Prototype === undef || window.Element === undef || Element.Methods === undef ||
 	  parse(Prototype.Version) < parse(Dialogs.MinimumPrototypeVersion)) {
 		throw('Dialogs requires the Prototype JavaScript framework version ' + Dialogs.MinimumPrototypeVersion + ' or greater');
 	}
 })();
 
 //= require "lang"
-//= require "stylesheet"
-
-Object.extend(Dialogs, {
-	dialogs: [],
-	modalDialogs: [],
-	
-	init: function() {
-		
-	}
-});
-
+//= require "prototype_extensions"
+//= require "tools"
 //= require "dialog"

@@ -1,12 +1,14 @@
-(function() {
-	var ie = navigator.userAgent.match(/MSIE\s(\d)+/);
-	if (ie) {
-		var version = parseInt(ie[1]);
-		Prototype.Browser['IE' + version] = true;
-		Prototype.Browser.ltIE7 = version < 7;
-	}
-})();
+/**
+ * == Language ==
+ * Additions to JavaScript's "standard library" and extensions to
+ * built-in JavaScript objects.
+**/
 
+/** section: Language
+ * class Object
+ *  
+ *  Extensions to the built-in `Object` object.
+**/
 Object.extend(Object, {
 	/**
 	 *  Object.extendAll(destination[, source...]) -> Object
@@ -24,6 +26,11 @@ Object.extend(Object, {
 	}
 });
 
+/** section: Language
+ * class String
+ *  
+ *  Extensions to the built-in `String` class.
+**/
 Object.extend(String.prototype, {
 	/**
 	 *  String#px() -> String
@@ -36,6 +43,11 @@ Object.extend(String.prototype, {
 	}
 });
 
+/** section: Language
+ * class Number
+ *  
+ *  Extensions to the built-in `Number` class.
+**/
 Object.extend(Number.prototype, {
 	/**
 	 *  Number#px() -> String

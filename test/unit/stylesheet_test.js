@@ -27,7 +27,7 @@ new Test.Unit.Runner({
 	},
 	
 	testLink: function() {
-		Stylesheet.link('foo.css');
+		Stylesheet.link('../fixtures/foo.css');
 		this.assert(Stylesheet.linked('foo.css'));
 	}
 });

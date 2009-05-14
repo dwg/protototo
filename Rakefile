@@ -69,6 +69,12 @@ namespace :test do
     runner.run
   end
   
+  task :server => [:require] do
+    runner = UnittestJS::WEBrickRunner::Runner.new(:test_dir => DIALOGS_TMP_DIR)
+    trap('INT') { runner.teardown; exit }
+    runner.setup
+  end
+  
   task :build => [:clean, :dist] do
     builder = UnittestJS::Builder::SuiteBuilder.new({
       :input_dir  => DIALOGS_TEST_UNIT_DIR,

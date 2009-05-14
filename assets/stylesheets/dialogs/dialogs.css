@@ -1,112 +1,38 @@
-#modal_cover {
+#dialog-overlay {
 	background-color: #000;
-	opacity: 0.15;
 	position: fixed;
 	left: 0;
+	right: 0;
 	top: 0;
-	height: 100%;
-	width: 100%;
-	z-index: 100;
+	bottom: 0;
 }
-
-#dialog_wrapper {
-	width: 100%;
-	position: fixed;
-	z-index: 101;
-}
-#dialog {
+.dialog {
 	background-color: #fff;
 	border: 2px solid #000;
-	width: 400px;
-	padding: 20px;
-	margin: 0 auto;
+	position: absolute;
 	}
-	#dialog #dialog_buttons {
-		margin: 10px 0 0;
-		padding: 0;
+	.dialog:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	.dialog .dialog-content {
+		margin: 20px;
+	}
+	.dialog .dialog-buttons {
+		margin: 0 20px 20px;
+		float: right;
 		}
-		#dialog #dialog_buttons a {
-			float: right;
+		.dialog .dialog-buttons a {
 			margin-left: 10px;
 		}
-
-#dialog.lightbox {
-	padding: 10px;
-	width: 200px;
-	height: 200px;
-	border: none;
-	position: relative;
+	.dialog .dialog-title {
+		padding: 5px;
+		background-color: #4c4bce;
+		color: #fff;
+		font-weight: bold;
+		border-bottom: 1px solid #000;
+		cursor: move;
 	}
-	#dialog.lightbox #lightbox_loading {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin: -11px 0 0 -63px;
-	}
-	#dialog.lightbox #lightbox_prev, #dialog.lightbox #lightbox_next,
-	#dialog.lightbox #lightbox_play, #dialog.lightbox #lightbox_stop {
-		width: 33%;
-		height: 100%;
-		position: absolute;
-		top: 10px;
-		display: block;
-		background-repeat: no-repeat;
-		cursor: pointer;
-		}
-		#dialog.lightbox #lightbox_prev {
-			left: 0;
-			background-position: 0 15%;
-		}
-		#dialog.lightbox #lightbox_next {
-			right: 0;
-			background-position: 100% 15%;
-		}
-		#dialog.lightbox #lightbox_play {
-			left: 0;
-			margin-left: 33%;
-			background-position: 50% 50%;
-		}
-		#dialog.lightbox #lightbox_stop {
-			left: 0;
-			width: 99%;
-			background-position: 50% 50%;
-		}
-	#dialog.lightbox #lightbox_panel {
-		background-color: #fff;
-		position: relative;
-		padding: 0 10px;
-		left: -10px;
-		}
-		#dialog.lightbox #lightbox_panel p {
-			margin: 10px 0;
-			width: 70%;
-			float: left;
-			font-weight: bold;
-			font-size: 77%;
-			color: #666;
-			}
-			#dialog.lightbox #lightbox_panel p#lightbox_caption {
-				margin-bottom: 0;
-			}
-			#dialog.lightbox #lightbox_panel p#lightbox_number_display {
-				margin-top: 0;
-				clear: left;
-				font-weight: normal;
-			}
-		#dialog.lightbox #lightbox_panel a {
-			width: 66px;
-			margin: 10px 0;
-			float: right;
-			cursor: pointer;
-			}
-			#dialog.lightbox #lightbox_panel a img {
-				border: none;
-			}
-
-#dialog.flash #dialog_contents img { float: left; }
-#dialog.flash #flash_contents {	margin-left: 130px; }
-#dialog.flash #flash_contents img { float: none; }
-
-#dialog .clear {
-	clear: both;
-}

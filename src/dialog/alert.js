@@ -1,41 +1,25 @@
+/** section: Dialog
+ *  class Dialog.Alert
+ *  
+ *  Simulates a standard `alert` dialog.
+**/
 Dialog.Alert = Class.create(Dialog.Buttons, {
-	defaultOptions: Object.serialExtend({}, Dialog.Base.prototype.defaultOptions, {
+	defaultOptions: Object.extendAll({}, Dialog.Buttons.prototype.defaultOptions, {
 		okayText: 'Close',
-		contents: 'This is an alert dialog',
-		onOkay: Dialog.emptyEventHandler,
-		closeOnOkay: true
-	}),
-	
-	_wrapInCloser: function(fn) {
-		return function(event) {
-			event.stop();
-			Dialog.current.close();
-			fn(event);
-		}
-	},
-	
-	setContents: function($super) {
-		if (this.options.closeOnOkay) {
-			this.options.onOkay = this._wrapInCloser(this.options.onOkay);
-		}
-		[this.options.contents].flatten().each(function(c) {
-			if (Object.isElement(c)) {
-				this.addElement(c);
-			} else if (Object.isString(c)) {
-				if (/(<[^>]+>.*<\/[^>]+>)|(<[^\/]+\/>)/.test(c)) {
-					var root = document.createElement('div');
-					root.innerHTML = c;
-					this.addElement(root.childNodes[0]);
-				} else {
-					this.addElement(document.createTextNode(c));
-				}
-			}
-		}, this);
-		$super();
-	}
+		onOkay: Event.stopper,
+		closeOnOkay: true,
+		content: 'Alert with no content',
+		modal: true
+	})
 });
 
-//var old_alert = alert;
-//var alert = function(message) {
-//	new Dialog.Alert({closeText: 'OK', contents: message});
-//};
+/**
+ *  Dialog.alert(message[, opener]) -> Dialog.Alert
+ *  - message (String | Element): the content to show in the alert
+ *  - opener (Element): the element triggering this dialog
+ *  
+ *  Shows a modal alert dialog with the given content.
+**/
+Dialog.alert = function(message) {
+	return new Dialog.Alert({content: message}, arguments[1]);
+};

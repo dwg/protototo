@@ -1,10 +1,10 @@
-/**
+/** section: Tools
  *  class Stylesheet
  * 
  *  A class that allows inclusion of stylesheets and querying for the
  *  presence of stylesheets.
 **/
-Stylesheet = Class.create({
+var Stylesheet = Class.create({
 	/**
 	 *  new Stylesheet(path)
 	 *  - path (String): A path to a stylesheet
@@ -35,9 +35,7 @@ Stylesheet = Class.create({
 		return Stylesheet.linked(this.path);
 	}
 });
-/**
- *  mixin Stylesheet.KlassMethods
-**/
+
 Stylesheet.KlassMethods = (function() {
 	function extractNameFromPath(path) {
 		var match = /[^\/]+\.css(?=\?|$)/.exec(path);

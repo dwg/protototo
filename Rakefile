@@ -10,11 +10,16 @@ DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_ROOT, 'config', 'con
 
 $:.unshift File.join(DIALOGS_ROOT, 'vendor', 'sprockets', 'lib')
 
+desc "Print the Dialogs library version"
+task :version do
+  puts "Dialogs version #{DIALOGS_VERSION}"
+end
+
 task :default => :dist
 
 desc "Clean the distribution folder"
 task :clean do
-  Dir.glob(File.join(DIALOGS_DIST_DIR, '*')).each do |file|
+  Dir.glob(File.join(DIALOGS_DIST_DIR, '*')) do |file|
     FileUtils.rm_rf(file)
   end
 end
@@ -69,7 +74,7 @@ namespace :test do
     runner.run
   end
   
-  task :server => [:require] do
+  task :server => [:build] do
     runner = UnittestJS::WEBrickRunner::Runner.new(:test_dir => DIALOGS_TMP_DIR)
     trap('INT') { runner.teardown; exit }
     runner.setup

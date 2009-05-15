@@ -46,9 +46,8 @@ Dialog.Base = (function() {
 		},
 		
 		createElements: function() {
-			var id = this.options.id || 'dialog_' + new Date().getTime();
-			this.dialog = new Element('div', {id: id, className: 'dialog'}).hide().setStyle({width: this.options.width.px()});
-			if (this.options.id) this.dialog.id = this.options.id;
+			this.dialog = new Element('div', {id: this.options.id || '', className: 'dialog'}).hide().setStyle({width: this.options.width.px()});
+			this.dialog.identify();
 			if (this.options.className) this.dialog.addClassName(this.options.className);
 			this.contents = new Element('div', {className: 'dialog-content'});
 			this.dialog.appendChild(this.contents);

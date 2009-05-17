@@ -12,9 +12,9 @@ new Test.Unit.Runner({
 	testShouldLinkStylesheets: function() {
 		this.assert(Stylesheet.linked(Dialog.Options.assetPrefix + Dialog.Options.stylesheetPath));
 		if (Prototype.Browser.IE) {
-			this.assert(Stylesheet.isLinked(Dialog.Options.assetPrefix + Dialog.Options.ieStylesheetPath));
+			this.assert(Stylesheet.linked(Dialog.Options.assetPrefix + Dialog.Options.ieStylesheetPath));
 			if (Prototype.Browser.ltIE7) {
-				this.assert(Stylesheet.isLinked(Dialog.Options.assetPrefix + Dialog.Options.ie6StylesheetPath));
+				this.assert(Stylesheet.linked(Dialog.Options.assetPrefix + Dialog.Options.ie6StylesheetPath));
 			}
 		}
 	},

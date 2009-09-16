@@ -2,14 +2,15 @@
 //= prefer <effects>
 //= provide "../assets"
 
-/*  Dialogs JavaScript framework, version <%= DIALOGS_VERSION %>
+/*  proto-dialogs
+ *  JavaScript framework, version <%= PROTO_DIALOGS_VERSION %>
  *  (c) 2009 Arni Einarsson
  *
- *  Dialogs is freely distributable under the terms of an MIT-style license.
+ *  proto-dialogs is freely distributable under the terms of an MIT-style license.
  *--------------------------------------------------------------------------*/
 
-var Dialogs = {
-	Version: '<%= DIALOGS_VERSION %>',
+var ProtoDialogs = {
+	Version: '<%= PROTO_DIALOGS_VERSION %>',
 	MinimumPrototypeVersion: '<%= REQUIRED_PROTOTYPE %>'
 };
 
@@ -18,13 +19,13 @@ var Dialogs = {
 	
 	function parse(versionString) {
 		var v = versionString.replace(/_.*|\./g, '');
-		v = parseInt(v + '0'.times(4-v.length));
-		return versionString.indexOf('_') > -1 ? v-1 : v;
+		v = parseInt(v + '0'.times(4 - v.length));
+		return versionString.indexOf('_') > -1 ? v - 1 : v;
 	}
 	
 	if(window.Prototype === undef || window.Element === undef || Element.Methods === undef ||
-	  parse(Prototype.Version) < parse(Dialogs.MinimumPrototypeVersion)) {
-		throw('Dialogs requires the Prototype JavaScript framework version ' + Dialogs.MinimumPrototypeVersion + ' or greater');
+	  parse(Prototype.Version) < parse(ProtoDialogs.MinimumPrototypeVersion)) {
+		throw('proto-dialogs requires the Prototype JavaScript framework version ' + ProtoDialogs.MinimumPrototypeVersion + ' or greater');
 	}
 })();
 

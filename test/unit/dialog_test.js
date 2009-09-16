@@ -1,12 +1,23 @@
-var FakeDialog = Class.create({
-	initialize: function() {
-		this.dialog = {
-			setStyle: function(style) {
-				this.z = style.zIndex;
-			}.bind(this)
-		};
-	}
-});
+var FakeDialog = (function() {
+	var idCounter = 1;
+	return Class.create(Dialog.Interface, {
+		initialize: function(modal) {
+			this.id = 'dialog-' + idCounter++;
+			this.dialog = {
+				setStyle: function(style) {
+					this.z = style.zIndex;
+				}.bind(this),
+				getStyle: function() {return this.z;}.bind(this),
+				identify: function() {return this.id;}.bind(this)
+			};
+			this.modal = modal;
+		},
+		
+		close: Prototype.emptyFunction,
+		getFrame: function() {return this.dialog;},
+		isModal: function() {return this.modal}
+	});
+})();
 
 new Test.Unit.Runner({
 	testShouldLinkStylesheets: function() {
@@ -25,17 +36,17 @@ new Test.Unit.Runner({
 	},
 	
 	testOverlay: function() {
-		var dialog1 = new FakeDialog();
-		Dialog.registerModalDialog(dialog1);
+		var dialog1 = new FakeDialog(true);
+		Dialog.register(dialog1);
 		this.wait(200, function() {
 			this.assertVisible($('dialog-overlay'));
-			var dialog2 = new FakeDialog();
-			Dialog.registerModalDialog(dialog2);
+			var dialog2 = new FakeDialog(true);
+			Dialog.register(dialog2);
 			this.assertVisible($('dialog-overlay'));
-			Dialog.unregisterModalDialog(dialog2);
+			Dialog.unregister(dialog2);
 			this.wait(200, function() {
 				this.assertVisible($('dialog-overlay'));
-				Dialog.unregisterModalDialog(dialog1);
+				Dialog.unregister(dialog1);
 				this.wait(200, function() {
 					this.assertHidden($('dialog-overlay'));
 				});
@@ -43,54 +54,28 @@ new Test.Unit.Runner({
 		});
 	},
 	
-	testNotificationFromOpener: function() {
-		var body = $$('body').first();
-		var firer = new FakeDialog();
-		firer.opener = body;
-		var fired = false;
-		var listener = function(event) {
-			fired = true;
-			this.assertEqual(event.memo.foo, 'bar');
-		}.bindAsEventListener(this);
-		body.observe('dialog:foo', listener);
-		Dialog.notify(firer, 'foo', {foo: 'bar'});
-		this.assert(fired);
-		body.stopObserving('dialog:foo', listener);
-	},
-	
-	testNotificationFromDocument: function() {
-		var fired = false;
-		var listener = function(event) {
-			fired = true;
-			this.assertEqual(event.memo.foo, 'bar');
-		}.bindAsEventListener(this);
-		document.observe('dialog:foo', listener);
-		Dialog.notify(new FakeDialog(), 'foo', {foo: 'bar'});
-		this.assert(fired);
-	},
-	
 	testLaterDialogShouldBeOnTopOfPrevious: function() {
 		var d1 = new FakeDialog();
 		var d2 = new FakeDialog();
-		Dialog.registerDialog(d1);
-		Dialog.registerDialog(d2);
+		Dialog.register(d1);
+		Dialog.register(d2);
 		this.assert(d2.z > d1.z);
-		Dialog.unregisterDialog(d1);
-		Dialog.unregisterDialog(d2);
+		Dialog.unregister(d1);
+		Dialog.unregister(d2);
 	},
 	
 	testOverlayShouldCoverPreviousDialogs: function() {
-		var d1 = new FakeDialog();
-		var d2 = new FakeDialog();
-		Dialog.registerModalDialog(d1);
+		var d1 = new FakeDialog(true);
+		var d2 = new FakeDialog(true);
+		Dialog.register(d1);
 		this.wait(200, function() {
-			Dialog.registerModalDialog(d2);
+			Dialog.register(d2);
 			var overlayZ = $('dialog-overlay').getStyle('zIndex');
 			this.assert(overlayZ > d1.z);
-			Dialog.unregisterModalDialog(d2);
+			Dialog.unregister(d2);
 			overlayZ = $('dialog-overlay').getStyle('zIndex');
 			this.assert(overlayZ < d1.z);
-			Dialog.unregisterModalDialog(d1);
+			Dialog.unregister(d1);
 			this.wait(200, Prototype.emptyFunction);
 		});
 	}

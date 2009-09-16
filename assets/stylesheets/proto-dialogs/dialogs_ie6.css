@@ -1,0 +1,14 @@
+#dialog-overlay {
+	position: absolute;
+	zoom: 1;
+	}
+	#dialog-overlay iframe {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		filter: mask();
+		width: 3000px;
+		height: 3000px;
+	}

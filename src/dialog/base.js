@@ -1,28 +1,18 @@
+//= require "interface"
+//= require "button_panel"
+
 /** section: Dialog
  *  class Dialog.Base
  *  
  *  An abstract base class for all dialogs.
 **/
 Dialog.Base = (function() {
-	function register(dialog) {
-		if (dialog.options.modal) {
-			Dialog.registerModalDialog(dialog);
-		} else {
-			Dialog.registerDialog(dialog);
-		}	
-	}
-	
-	function unregister(dialog) {
-		if (dialog.options.modal) {
-			Dialog.unregisterModalDialog(dialog);
-		} else {
-			Dialog.unregisterDialog(dialog);
-		}
-	}
-	
-	return Class.create({
+	return Class.create(Dialog.Interface, {
 		defaultOptions: {
-			width: 400
+			width: 400,
+			modal: false,
+			transitionDuration: 0.4,
+			buttons: [{text: 'Close', close: true, onclick: Event.stopper}]
 		},
 		
 		/**
@@ -35,8 +25,16 @@ Dialog.Base = (function() {
 			this.opener = Object.isElement(options_or_opener) ? options_or_opener : arguments[1];
 			this.options = Object.extendAll({}, this.defaultOptions, options);
 			this.create();
-			register(this);
+			Dialog.register(this);
 			this.show();
+		},
+		
+		getFrame: function() {
+			return this.dialog;
+		},
+		
+		isModal: function() {
+			return this.options.modal;
 		},
 		
 		create: function() {
@@ -46,12 +44,15 @@ Dialog.Base = (function() {
 		},
 		
 		createElements: function() {
-			this.dialog = new Element('div', {id: this.options.id || '', className: 'dialog'}).hide().setStyle({width: this.options.width.px()});
-			this.dialog.identify();
+			this.dialog = new Element('div', {id: this.options.id || '', className: 'dialog'}).hide().setWidth(this.options.width);
 			if (this.options.className) this.dialog.addClassName(this.options.className);
+			if (this.options.modal) this.dialog.addClassName('dialog-modal');
 			this.contents = new Element('div', {className: 'dialog-content'});
-			this.dialog.appendChild(this.contents);
-			$$('body').first().insert(this.dialog);
+			this.dialog.insert(this.contents);
+			this.buttonPanel = new Dialog.ButtonPanel(this);
+			this.options.buttons.each(this.buttonPanel.addButton, this.buttonPanel);
+			this.dialog.insert(this.buttonPanel.element);
+			$(document.body).insert(this.dialog);
 		},
 		
 		/**
@@ -60,15 +61,7 @@ Dialog.Base = (function() {
 		 *  Centers this dialog on the current viewport
 		**/
 		layout: function() {
-			var pageDims = document.viewport.getDimensions();
-			var dialogDims = this.dialog.getDimensions();
-			var vertScroll = document.viewport.getScrollOffsets().top;
-			
-			var top = (pageDims.height - dialogDims.height)/2;
-			var left = (pageDims.width - dialogDims.width)/2;
-			this.dialog.setStyle({
-				top: top.px(), left: left.px()
-			});
+			this.dialog.centerInViewport({minLeft: 10, minTop: 10});
 		},
 		
 		/**
@@ -80,7 +73,7 @@ Dialog.Base = (function() {
 			if (this.dialog.visible()) return;
 			if (Dialog.effects) {
 				this.dialog.appear({
-					duration: 0.4, queue: Dialog.defaultQueue()
+					duration: this.options.transitionDuration, queue: Dialog.effectsQueue('with-last')
 				});
 			} else {
 				this.dialog.show();
@@ -97,7 +90,7 @@ Dialog.Base = (function() {
 			var callback = arguments[0] || Prototype.emptyFunction;
 			if (Dialog.effects) {
 				this.dialog.fade({
-					duration: 0.4, queue: Dialog.defaultQueue(),
+					duration: this.options.transitionDuration, queue: Dialog.effectsQueue('with-last'),
 					afterFinish: callback
 				});
 			} else {
@@ -114,11 +107,12 @@ Dialog.Base = (function() {
 		 *  and unregisters it
 		**/
 		close: function() {
-			Dialog.notify(this, 'closing');
+			if (this.closing) return;
+			this.closing = true;
 			this.hide(function() {
 				this.dialog.remove();
+				Dialog.unregister(this);
 			}.bind(this));
-			unregister(this);
 		},
 		
 		/**

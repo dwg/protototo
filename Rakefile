@@ -6,7 +6,7 @@ DIALOGS_DIST_DIR      = File.join(DIALOGS_ROOT, 'dist')
 DIALOGS_TEST_DIR      = File.join(DIALOGS_ROOT, 'test')
 DIALOGS_TEST_UNIT_DIR = File.join(DIALOGS_TEST_DIR, 'unit')
 DIALOGS_TMP_DIR       = File.join(DIALOGS_TEST_UNIT_DIR, 'tmp')
-DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_ROOT, 'config', 'constants.yml')))['DIALOGS_VERSION']
+DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_ROOT, 'config', 'constants.yml')))['PROTO_DIALOGS_VERSION']
 
 $:.unshift File.join(DIALOGS_ROOT, 'vendor', 'sprockets', 'lib')
 
@@ -37,13 +37,13 @@ task :dist => :clean do
   
   secretary = Sprockets::Secretary.new(
     :root => DIALOGS_ROOT,
-    :source_files => [File.join('src', 'dialogs.js')],
+    :source_files => [File.join('src', 'proto-dialogs.js')],
     :load_path => ['config'],
     :asset_root => 'dist',
     :relative_require_only=>true
   )
   
-  secretary.concatenation.save_to(File.join(DIALOGS_DIST_DIR, 'dialogs.js'))
+  secretary.concatenation.save_to(File.join(DIALOGS_DIST_DIR, 'proto-dialogs.js'))
   secretary.install_assets
 end
 

@@ -26,24 +26,17 @@ var Dialog = {};
 	
 	function createElements() {
 		var overlay = new Element('div', {id: 'dialog-overlay'}).hide();
-		$$('body').first().insert(overlay);
+		$(document.body).insert(overlay);
 		if (!Dialog.effects) overlay.setOpacity(Dialog.Options.overlayOpacity);
 		if (Prototype.Browser.ltIE7) {
 			overlay.appendChild(new Element('iframe'));
+		}
+		if (!Prototype.CSSFeatures.PositionFixed) {
 			Dialog.overlayObserver = function() {
-				var pageDims = document.viewport.getDimensions();
-				var vertScroll = document.viewport.getScrollOffsets().top;
-				overlay.setStyle({
-					position: 'absolute', top: vertScroll.px(), left: '0',
-					width: pageDims.width.px(), height: pageDims.height.px()
-				});
+				overlay.fillDocument().centerInViewport();
 			};
 			Element.observe(window, 'scroll', Dialog.overlayObserver);
 			Element.observe(window, 'resize', Dialog.overlayObserver);
-			Element.observe(window, 'unload', function() {
-				Element.stopObserving(window, 'scroll', Dialog.overlayObserver);
-				Element.stopObserving(window, 'resize', Dialog.overlayObserver);
-			});
 		}
 	}
 	
@@ -53,33 +46,35 @@ var Dialog = {};
 	 *  Initializes the Dialogs library
 	**/
 	function init() {
+		Dialog.effects = window.Effect !== undef;
 		linkStylesheets();
 		createElements();
-		Dialog.effects = window.Effect !== undef;
 	}
 	
 	/**
-	 *  Dialog.defaultQueue() -> Object
+	 *  Dialog.effectsQueue([position = 'end']) -> Object
+	 *  - position (String): position of effect in queue
 	 * 
 	 *  Returns the default effects queue options for dialogs
 	**/
-	function defaultQueue() {
+	function effectsQueue() {
 		var position = arguments[0] || 'end';
 		return {position: position, scope: 'dialogs'};
 	}
 	
-	var dialogs = [];
-	var modalDialogs = [];
-	var maxZ = 10;
+	var registry = new Hash(),
+		dialogs = [],
+		modals = [],
+		maxZ = 100;
 	
 	function coverScreen() {
 		var overlay = $('dialog-overlay');
-		if (overlay.visible()) return;
 		overlay.setStyle({zIndex: ++maxZ});
+		if (overlay.visible()) return;
 		if (Dialog.effects) {
 			overlay.appear({
 				from: 0, to: Dialog.Options.overlayOpacity,
-				duration: 0.15, queue: defaultQueue()
+				duration: 0.15, queue: effectsQueue()
 			});
 		} else {
 			overlay.show();
@@ -90,79 +85,58 @@ var Dialog = {};
 		var overlay = $('dialog-overlay');
 		if (!overlay.visible()) return;
 		if (Dialog.effects) {
-			overlay.fade({
-				duration: 0.15, queue: defaultQueue()
-			});
+			overlay.fade({duration: 0.15, queue: effectsQueue()});
 		} else {
 			overlay.hide();
 		}
 	}
 	
 	/**
-	 *  Dialog.registerDialog(dialog) -> undefined
+	 *  Dialog.register(dialog) -> undefined
 	 *  - dialog (Dialog.Base): the dialog to register
 	**/
-	function registerDialog(dialog) {
-		dialog.dialog.setStyle({zIndex: ++maxZ});
-		dialogs.push(dialog);
-	}
-	
-	/**
-	 *  Dialog.unregisterDialog(dialog) -> undefined
-	 *  - dialog (Dialog.Base): the dialog to unregister
-	**/
-	function unregisterDialog(dialog) {
-		dialogs = dialogs.without(dialog);
-	}
-	
-	/**
-	 *  Dialog.registerModalDialog(dialog) -> undefined
-	 *  - dialog (Dialog.Base): the dialog to register
-	 *  
-	 *  Will cover the screen with an overlay
-	**/
-	function registerModalDialog(dialog) {
-		if (modalDialogs.size() == 0) {
+	function register(dialog) {
+		if (dialog.isModal()) {
+			modals.push(dialog);
 			coverScreen();
-		} else {
-			$('dialog-overlay').setStyle({zIndex: ++maxZ});
 		}
-		dialog.dialog.setStyle({zIndex: ++maxZ});
-		modalDialogs.push(dialog);
+		dialog.getFrame().setStyle({zIndex: ++maxZ});
+		dialogs.push(dialog);
+		registry.set(dialog.getFrame().identify(), dialog);
 	}
 	
 	/**
-	 *  Dialog.unregisterModalDialog(dialog) -> undefined
+	 *  Dialog.unregister(dialog) -> undefined
 	 *  - dialog (Dialog.Base): the dialog to unregister
-	 *  
-	 *  Will remove overlay cover if last modal dialog,
-	 *  otherwise will make next modal dialog available
 	**/
-	function unregisterModalDialog(dialog) {
-		modalDialogs = modalDialogs.without(dialog);
-		if (modalDialogs.size() == 0) {
-			releaseScreen();
-		} else {
-			modalDialogs.last().dialog.setStyle({zIndex: maxZ});
+	function unregister(dialog) {
+		dialogs = dialogs.without(dialog);
+		if (dialog.isModal()) {
+			modals = modals.without(dialog);
+			if (modals.size() == 0) {
+				releaseScreen();
+			} else {
+				$('dialog-overlay').setStyle({zIndex: modals.last().getFrame().getStyle('z-index') - 1});
+			}
 		}
+		registry.unset(dialog.getFrame().identify());
 	}
 	
 	/**
-	 *  Dialog.notify(dialog, eventName[, eventParams]) -> undefined
-	 *  - dialog (Dialog.Base): the notifying dialog
-	 *  - eventName: (String): the name of the notifying event
-	 *  - eventParams: (Object): parameters to be passed with the event
-	 *  
-	 *  Will fire an event named 'dialog:`eventName`' originating at
-	 *  `dialog.opener` if defined, at `document` otherwise.
+	 *  Dialog.close(id) -> undefined
+	 *  - id (String): id of the dialog to close
 	**/
-	function notify(dialog, eventName) {
-		var memo = Object.extend({dialog: dialog}, arguments[2] || {});
-		if (dialog.opener) {
-			dialog.opener.fire('dialog:' + eventName, memo);
-		} else {
-			document.fire('dialog:' + eventName, memo);
-		}
+	function close(id) {
+		registry.get(id).close();
+	}
+	
+	/**
+	 *  Dialog.closeAll() -> undefined
+	 *  
+	 *  Closes all open windows, modal or otherwise
+	**/
+	function closeAll() {
+		dialogs.invoke('close');
 	}
 	
 	/**
@@ -175,32 +149,29 @@ var Dialog = {};
 	**/
 	function log(kind, message) {
 		if (console && console[kind]) {
-			console[kind](message);
+			console[kind]('proto-dialogs: ' + message);
 		}
 	}
 	
 	Object.extend(Dialog, {
 		init: init,
-		defaultQueue: defaultQueue,
-		registerDialog: registerDialog,
-		unregisterDialog: unregisterDialog,
-		registerModalDialog: registerModalDialog,
-		unregisterModalDialog: unregisterModalDialog,
-		notify: notify,
-		log: log,
+		effectsQueue: effectsQueue,
+		register: register,
+		unregister: unregister,
+		close: close,
+		closeAll: closeAll,
+		log: log.curry('log'),
 		info: log.curry('info'),
 		warn: log.curry('warn'),
 		error: log.curry('error')
 	});
 })();
 
-document.observe('dom:loaded', Dialog.init);
+if (document.loaded) {
+	Dialog.init();
+} else {
+	document.observe('dom:loaded', Dialog.init);
+}
 
 //= require "dialog/base"
-//= require "dialog/buttons"
-//= require "dialog/alert"
-//= require "dialog/confirm"
-
-//= require "dialog/titled"
-
-//= require "dialog/ajax"
+//= require "dialog/native"

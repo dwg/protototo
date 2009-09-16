@@ -13,10 +13,13 @@ new Test.Unit.Runner({
 		var dialogs = $$('.dialog');
 		this.assert(dialogs.size() == 1);
 		this.assertIdentical(tester.dialog, dialogs.first());
-		this.assert(dialogs.first().childElements().size() == 1);
+		this.assert(dialogs.first().childElements().size() == 2);
 		var dialogContent = dialogs.first().childElements().first();
 		this.assert(dialogContent.hasClassName('dialog-content'));
 		this.assertIdentical(tester.contents, dialogContent);
+		var buttonPanel = dialogs.first().childElements().last();
+		this.assert(buttonPanel.hasClassName('dialog-buttons'));
+		this.assertIdentical(tester.buttonPanel.element, buttonPanel);
 		this.close(tester);
 	},
 	
@@ -82,25 +85,6 @@ new Test.Unit.Runner({
 			tester.close();
 			this.wait(500, function() {
 				this.assertIdentical(0, $$('.dialog').size());
-			});
-		});
-	},
-	
-	testShouldFireEventWhenClosing: function() {
-		var opener = $('opener');
-		var dialog = new Dialog.Base(opener);
-		var fired = false;
-		var observer = function(event) {
-			fired = true;
-			if (dialog !== event.memo.dialog) return;
-			this.assertIdentical(dialog, event.memo.dialog);
-		}.bindAsEventListener(this);
-		opener.observe('dialog:closing', observer);
-		this.wait(500, function() {
-			dialog.close();
-			this.wait(500, function() {
-				this.assert(fired);
-				opener.stopObserving('dialog:closing', observer);
 			});
 		});
 	},

@@ -1,10 +1,12 @@
-= Dialogs
+= proto-dialogs
 
-Work in progress
+An implementation of lightbox style dialogs to replace native browser
+dialogs (alert, confirm, prompt).
 
-== TODO
-* IE6 bug in lightbox showing/hiding navigation
-* Preserve width/height when showing dialog from dialog
+The purpose of this project is for me to improve my javascript skills
+and have fun with prototype and scriptaculous.
+
+This project is still a work in progress.
 
 == License 
 

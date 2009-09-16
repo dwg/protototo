@@ -36,7 +36,7 @@ Object.extend(String.prototype, {
 	 *  String#px() -> String
 	 *  
 	 *  Returns a new string with 'px' appended to the end unless this string already ends
-	 *  with 'px', in which case it returns this.
+	 *  with 'px', in which case it returns the string unchanged.
 	**/
 	px: function() {
 		return this.endsWith('px') ? this : this + 'px';

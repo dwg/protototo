@@ -5,8 +5,8 @@
  */
 Dialog.Options = Object.extend({
 	assetPrefix: '',
-	stylesheetPath: '/stylesheets/dialogs/dialogs.css',
-	ieStylesheetPath: '/stylesheets/dialogs/dialogs_ie.css',
-	ie6StylesheetPath: '/stylesheets/dialogs/dialogs_ie6.css',
+	stylesheetPath: '/stylesheets/proto-dialogs/dialogs.css',
+	ieStylesheetPath: '/stylesheets/proto-dialogs/dialogs_ie.css',
+	ie6StylesheetPath: '/stylesheets/proto-dialogs/dialogs_ie6.css',
 	overlayOpacity: 0.85
 }, window.DialogOptions || {});

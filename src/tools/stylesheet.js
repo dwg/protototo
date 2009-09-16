@@ -68,10 +68,10 @@ Stylesheet.KlassMethods = (function() {
 	 *  - path (String): A path to a stylesheet
 	**/
 	function findLink(path) {
-		var name = extractNameFromPath(path);
-		var links = $$('link[href*=' + path + ']').select(function(link) {
-			return name == extractNameFromPath(link.href);
-		});
+		var name = extractNameFromPath(path),
+			links = $$('link[href*=' + path + ']').select(function(link) {
+				return name == extractNameFromPath(link.href);
+			});
 		if (links.size() > 1 && console && console.warn) {
 			console.warn('Multiple links to stylesheet ' + name + ': ' + links.inspect());
 		}

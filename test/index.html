@@ -3,85 +3,6 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>test</title>
-		<script type="text/javascript" src="./javascripts/prototype.js"></script>
-		<script type="text/javascript" src="./javascripts/effects.js"></script>
-		<script type="text/javascript" src="./javascripts/lowpro.js"></script>
-		<script type="text/javascript">
-//<![CDATA[
-DialogOptions = {
-	stylesheetPath: '../dist/stylesheets/dialogs.css',
-	ieStylesheetPath: '../dist/stylesheets/dialogs_ie.css',
-	ie6StylesheetPath: '../dist/stylesheets/dialogs_ie6.css',
-
-	Lightbox: {
-		closeImage: '../dist/images/closelabel.gif',
-		loadImage: './images/big_loading.gif',
-		nextImage: '../dist/images/nextlabel.gif',
-		prevImage: '../dist/images/prevlabel.gif',
-		playImage: '../dist/images/playlabel.gif',
-		stopImage: '../dist/images/stoplabel.gif'
-	},
-
-	Flash: {
-		informationImage: '../dist/images/info.png',
-		warningImage: '../dist/images/warning.png',
-		errorImage: '../dist/images/error.png'
-	}
-};
-//]]>
-		</script>
-		<script type="text/javascript" src="../dist/dialogs.js"></script>
-		<script type="text/javascript">
-//<![CDATA[
-Event.addBehavior({
-	'a[href][rel^=lightbox]:click': function(event) {
-		event.stop();
-		new Dialog.Lightbox({start: this});
-	},
-
-	'a#alert:click': function(event) {
-		event.stop();
-		new Dialog.Alert();
-	},
-	'a#confirm:click': function(event) {
-		event.stop();
-		new Dialog.Confirm();
-	},
-	'a#multi:click': function(event) {
-		event.stop();
-		new Dialog.Buttons({
-			button1Text: 'Button 1',
-			onButton1: Dialog.emptyEventHandler,
-			button2Text: 'Button 2',
-			onButton2: Dialog.emptyEventHandler,
-			button3Text: 'Button 3',
-			onButton3: Dialog.emptyEventHandler,
-			button4Text: 'Button 4',
-			onButton4: Dialog.emptyEventHandler,
-			button5Text: 'Button 5',
-			onButton5: Dialog.emptyEventHandler,
-			okayText: 'OK',
-			onOkay: Dialog.emptyEventHandler,
-			cancelText: 'Cancel',
-			onCancel: Dialog.closer
-		});
-	},
-	'a#dual:click': function(event) {
-		event.stop();
-		var link = $a({href: '#'}, 'Pop me up');
-		link.observe('click', function(event) {
-			event.stop();
-			new Dialog.Alert({contents: 'This is some longer text so that the two dialogs are not the same size'});
-		});
-		new Dialog.Confirm({contents: link});
-	},
-	'a#flash:click': function(event) {
-		event.stop();
-		Dialog[this.className]('Flash Gordon strikes again');
-	}
-});
-//]]>
-		</script>
 		<style type="text/css">
 			body {
 				height: 1000px;
@@ -94,29 +15,7 @@ Event.addBehavior({
 			}
 			p {
 				font-size: 108%;
-			}
-
-			#dialog.lightbox img#lightbox_loading {
-				margin: -64px 0 0 -64px;
-			}
-
-			#bea_2ja {
-				background-color: #000;
-				padding: 20px;
-				width: 558px;
-				}
-				#bea_2ja p {
-					float: left;
-					border: 10px solid #fff;
-					border-bottom: 25px solid #fff;
-					margin: 10px;
-				}
-				#bea_2ja a img {
-					border: none;
-				}
-
-			.clear {
-				clear: both;
+				margin: 0 0 .5em;
 			}
 		</style>
 	</head>
@@ -124,39 +23,74 @@ Event.addBehavior({
 		<p>
 			<a id="alert" href="#">Show me an alert</a><br/>
 			<a id="confirm" href="#">Show me a confirm</a><br/>
-			<a id="multi" href="#">Show me a multi-button dialog</a><br/>
-			<a id="flash" class="information" href="#">Inform me</a><br/>
-			<a id="flash" class="warning" href="#">Warn me</a><br/>
-			<a id="flash" class="error" href="#">Error me</a><br/>
-			<a id="dual" href="#">Show me pop within pop</a><br/>
-			<a href="./images/money.jpg" title="This is my caption" rel="lightbox">Show me the money</a><br/>
-			<a href="http://www.lokeshdhakar.com/projects/lightbox2/images/image-1.jpg" title="This is a really really really really looooooooong caption with lots of words and stuff" rel="lightbox[group]">From outside</a><br/>
-			<a href="http://www.totil.com/files/images/kort_cph_big.preview.jpg" rel="lightbox[group]">From outside 2</a><br/>
-			<a href="./images/image-3.jpg" title="This is my caption" rel="lightbox[group]">group 1</a><br/>
-			<a href="./images/image-4.jpg" rel="lightbox[group]">group 2</a><br/>
-			<a href="./images/image-5.jpg" title="This is another caption" rel="lightbox[group]">group 3</a><br/>
-			<a href="./images/image-6.jpg" title="This is my caption" rel="lightbox[group]">group 4</a>
+			<a id="prompt" href="#">Show me a prompt</a><br/>
+			<a id="custom" href="#">Custom window</a><br/>
+			<a id="complex" href="#">Complex window</a><br/>
 		</p>
-		<div id="bea_2ja">
-			<p>
-				<a href="http://lh5.ggpht.com/_lfJzIygx9ec/SW8dBU7cseI/AAAAAAAAD-E/53gw-vj4V3w/s800/IMG_3123.JPG" title="Að opna pakkana frá mömmu og pabba að morgni afmælisdagsins" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/1_thumb.jpg" alt=""/></a>
-			</p>
-			<p>
-				<a href="http://lh6.ggpht.com/_lfJzIygx9ec/SW8dC5tTqdI/AAAAAAAAD-M/L2K5lzCHUp4/s800/IMG_3124.JPG" title="Voða spennandi" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/2_thumb.JPG" alt=""/></a>
-			</p>
-			<p>
-				<a href="http://lh3.ggpht.com/_lfJzIygx9ec/SW8dDsOFxGI/AAAAAAAAD-U/2jA0Iv7C1zY/s800/IMG_3127.JPG" title="Vááá" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/3_thumb.JPG" alt=""/></a>
-			</p>
-			<p>
-				<a href="http://lh3.ggpht.com/_lfJzIygx9ec/SW8dEx30WvI/AAAAAAAAD-c/pMn9ctYQars/s800/IMG_3128.JPG" title="Gekk mikið betur að opna hinn pakkann" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/4_thumb.JPG" alt=""/></a>
-			</p>
-			<p>
-				<a href="http://lh5.ggpht.com/_lfJzIygx9ec/SW8dGIDRJfI/AAAAAAAAD-k/K_mO5-h9-I4/s800/IMG_3129.JPG" title="Fékk Hr. Kartöfluhaus frá afa Bebba" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/5_thumb.JPG" alt=""/></a>
-			</p>
-			<p>
-				<a href="http://lh4.ggpht.com/_lfJzIygx9ec/SW8dHmUq1II/AAAAAAAAD-w/9w2QlXwvnm0/s800/IMG_3130.JPG" title="Getur dundað sér heillengi við að setja hann saman á mismunandi vegu" rel="lightbox[bea_2ja]"><img src="./images/bea_2ja/6_thumb.JPG" alt=""/></a>
-			</p>
-			<br class="clear"/>
-		</div>
+		<script type="text/javascript" src="./javascripts/prototype.js"></script>
+		<script type="text/javascript" src="./javascripts/effects.js"></script>
+		<script type="text/javascript">
+//<![CDATA[
+DialogOptions = {
+	assetPrefix: '../dist',
+	overlayOpacity: 0.75
+};
+//]]>
+		</script>
+		<script type="text/javascript" src="../dist/proto-dialogs.js"></script>
+		<script type="text/javascript">
+//<![CDATA[
+document.observe('dom:loaded', function() {
+	Event.observeAndStop('alert', 'click', function() {
+		Dialog.alert('Alert !');
+	});
+	Event.observeAndStop('confirm', 'click', function() {
+		Dialog.confirm('Are you sure?', function(yes) {
+			if (yes) {
+				Dialog.alert('yay!!!');
+			} else {
+				Dialog.alert('boo!!!');
+			}
+		});
+	});
+	Event.observeAndStop('prompt', 'click', function() {
+		Dialog.prompt('What is your name?', function(answer) {
+			if (answer) {
+				Dialog.alert('Hi, ' + answer + '!');
+			} else {
+				Dialog.alert('How rude!');
+			}
+		});
+	});
+	Event.observeAndStop('custom', 'click', function() {
+		new Dialog.Base({
+			content: '<form action="/login" method="post"><p><label for="login">Login</label><br/><input type="text" name="login" id="login"/></p><p><label for="password">Password</label><br/><input type="password" name="password" id="password"/></p></form>',
+			buttons: [
+				{text: 'Login', close: false, onclick: function(event) {
+					event.stop();
+					event.element().up('.dialog').down('form').submit();
+				}},
+				{text: 'Cancel', close: true, onclick: Event.stopper}
+			]
+		});
+	});
+	Event.observeAndStop('complex', 'click', function() {
+		var b1 = new Element('a', {href: '#'}).update('Open confirm'),
+			b2 = new Element('a', {href: '#'}).update('Open dialog');
+		Event.observeAndStop(b1, 'click', function() {
+			Dialog.confirm('Close all dialogs?', function(yes) {
+				if (yes) {
+					Dialog.closeAll();
+				}
+			});
+		});
+		Event.observeAndStop(b2, 'click', function() {
+			new Dialog.Base({content: b1});
+		});
+		Dialog.alert(b2);
+	});
+});
+//]]>
+		</script>
 	</body>
 </html>

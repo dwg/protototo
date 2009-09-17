@@ -71,6 +71,7 @@ var Dialog = {};
 		var overlay = $('dialog-overlay');
 		overlay.setStyle({zIndex: ++maxZ});
 		if (overlay.visible()) return;
+		$(document.body).fire('screen:covered');
 		if (Dialog.effects) {
 			overlay.appear({
 				from: 0, to: Dialog.Options.overlayOpacity,
@@ -89,6 +90,7 @@ var Dialog = {};
 		} else {
 			overlay.hide();
 		}
+		$(document.body).fire('screen:released');
 	}
 	
 	/**

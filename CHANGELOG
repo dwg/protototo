@@ -1,3 +1,5 @@
+* Fires screen:covered and screen:released on covering and releasing screen
+
 * Alternatives to native dialogs
 
 * Build framework

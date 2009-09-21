@@ -31,6 +31,12 @@ Dialog.Interface = (function() {
 		**/
 		isModal: function() {
 			return false;
+		},
+		
+		callback: function(which) {
+			if (this.options[which] && Object.isFunction(this.options[which])) {
+				this.options[which]();
+			}
 		}
 	};
 })();

@@ -6,27 +6,15 @@
 	-moz-border-radius: 10px;
 	-webkit-border-radius 10px;
 	}
-	.dialog.dialog-modal {
-		background-color: #fff;
-		box-shadow: 2px 2px 10px #000;
-		-moz-box-shadow: 2px 2px 10px #000;
-		-webkit-box-shadow: 2px 2px 10px #000;
-	}
 	.dialog .dialog-content {
 		background-color: #fff;
 		padding: 10px;
 		}
-		.dialog.dialog-modal .dialog-content {
-			padding: 0 0 10px 0;
-		}
 	.dialog .dialog-buttons {
 		background-color: #fff;
-		padding: 5px 10px 10px;
+		padding: 5px 10px;
 		border-top: 1px solid #ddd;
 		text-align: right;
-		}
-		.dialog.dialog-modal .dialog-buttons {
-			padding: 5px 0 0;
 		}
 		.dialog .dialog-buttons a {
 			margin-left: 10px;
@@ -35,3 +23,15 @@
 			color: #7a7a7a;
 			font-weight: bold;
 		}
+.dialog.dialog-modal {
+	background-color: #fff;
+	box-shadow: 2px 2px 10px #000;
+	-moz-box-shadow: 2px 2px 10px #000;
+	-webkit-box-shadow: 2px 2px 10px #000;
+	}
+	.dialog-modal .dialog-content {
+		padding: 0 0 10px;
+	}
+	.dialog-modal .dialog-buttons {
+		padding: 5px 0 0;
+	}

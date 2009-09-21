@@ -54,7 +54,8 @@ Dialog.Native = {
 			buttons: [
 				{text: 'Ok', close: true, onclick: function(event) {event.stop(); handler(input.getValue());}},
 				{text: 'Cancel', close: true, onclick: function(event) {event.stop(); handler(null);}}
-			]
+			],
+			afterShow: Form.Element.activate.curry(input)
 		});
 	}
 };

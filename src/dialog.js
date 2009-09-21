@@ -71,6 +71,10 @@ var Dialog = {};
 		modals = [],
 		maxZ = 100;
 	
+	function current() {
+		return dialogs.last();
+	}
+	
 	function coverScreen() {
 		var overlay = Dialog.overlay;
 		overlay.setStyle({zIndex: ++maxZ});
@@ -162,6 +166,7 @@ var Dialog = {};
 	Object.extend(Dialog, {
 		init: init,
 		effectsQueue: effectsQueue,
+		current: current,
 		register: register,
 		unregister: unregister,
 		close: close,

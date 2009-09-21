@@ -8,9 +8,9 @@
 **/
 Dialog.Base = Class.create(Dialog.Interface, {
 	defaultOptions: {
-		width: 400,
+		width: Dialog.Options.defaultWidth,
 		modal: false,
-		transitionDuration: 0.4,
+		transitionDuration: Dialog.Options.transitionDuration,
 		buttons: [{text: 'Close', close: true, onclick: Event.stopper}]
 	},
 	
@@ -19,9 +19,7 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	 *  - options (Object): options for this dialog
 	 *  - opener (Element): the element triggering this dialog
 	**/
-	initialize: function(options_or_opener) {
-		var options = Object.isElement(options_or_opener) ? arguments[1] || {} : options_or_opener;
-		this.opener = Object.isElement(options_or_opener) ? options_or_opener : arguments[1];
+	initialize: function(options) {
 		this.options = Object.extendAll({}, this.defaultOptions, options);
 		this.create();
 		Dialog.register(this);
@@ -70,12 +68,15 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	**/
 	show: function() {
 		if (this.dialog.visible()) return;
+		this.callback('beforeShow');
 		if (Dialog.effects) {
 			this.dialog.appear({
-				duration: this.options.transitionDuration, queue: Dialog.effectsQueue('with-last')
+				duration: this.options.transitionDuration, queue: Dialog.effectsQueue('with-last'),
+				afterFinish: this.callback.bind(this, 'afterShow')
 			});
 		} else {
 			this.dialog.show();
+			this.callback('afterShow');
 		}
 	},
 	
@@ -84,17 +85,16 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	 *  
 	 *  Hides this dialog and calls `callback` if present
 	**/
-	hide: function() {
+	hide: function(callback) {
 		if (!this.dialog.visible()) return;
-		var callback = arguments[0] || Prototype.emptyFunction;
 		if (Dialog.effects) {
 			this.dialog.fade({
 				duration: this.options.transitionDuration, queue: Dialog.effectsQueue('with-last'),
-				afterFinish: callback
+				afterFinish: callback || Prototype.emptyFunction
 			});
 		} else {
 			this.dialog.hide();
-			callback();
+			if (callback) callback();
 		}
 	},
 	
@@ -108,9 +108,11 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	close: function() {
 		if (this.closing) return;
 		this.closing = true;
+		this.callback('beforeClose');
 		this.hide(function() {
 			this.dialog.remove();
 			Dialog.unregister(this);
+			this.callback('afterClose');
 		}.bind(this));
 	},
 	

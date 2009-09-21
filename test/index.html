@@ -27,6 +27,7 @@
 			<a id="custom" href="#">Custom window</a><br/>
 			<a id="complex" href="#">Complex window</a><br/>
 		</p>
+		<p style="text-align: center"><img src="./images/info.png" alt="" /></p>
 		<script type="text/javascript" src="./javascripts/prototype.js"></script>
 		<script type="text/javascript" src="./javascripts/effects.js"></script>
 		<script type="text/javascript">
@@ -41,10 +42,12 @@ DialogOptions = {
 		<script type="text/javascript">
 //<![CDATA[
 document.observe('dom:loaded', function() {
-	Event.observeAndStop('alert', 'click', function() {
+	$('alert').observe('click', function(event) {
+		event.stop();
 		Dialog.alert('Alert !');
 	});
-	Event.observeAndStop('confirm', 'click', function() {
+	$('confirm').observe('click', function(event) {
+		event.stop();
 		Dialog.confirm('Are you sure?', function(yes) {
 			if (yes) {
 				Dialog.alert('yay!!!');
@@ -53,7 +56,8 @@ document.observe('dom:loaded', function() {
 			}
 		});
 	});
-	Event.observeAndStop('prompt', 'click', function() {
+	$('prompt').observe('click', function(event) {
+		event.stop();
 		Dialog.prompt('What is your name?', function(answer) {
 			if (answer) {
 				Dialog.alert('Hi, ' + answer + '!');
@@ -62,7 +66,8 @@ document.observe('dom:loaded', function() {
 			}
 		});
 	});
-	Event.observeAndStop('custom', 'click', function() {
+	$('custom').observe('click', function(event) {
+		event.stop();
 		new Dialog.Base({
 			content: '<form action="/login" method="post"><p><label for="login">Login</label><br/><input type="text" name="login" id="login"/></p><p><label for="password">Password</label><br/><input type="password" name="password" id="password"/></p></form>',
 			buttons: [
@@ -71,20 +76,26 @@ document.observe('dom:loaded', function() {
 					event.element().up('.dialog').down('form').submit();
 				}},
 				{text: 'Cancel', close: true, onclick: Event.stopper}
-			]
+			],
+			afterShow: function() {
+				Dialog.current().contents.down('input').activate();
+			}
 		});
 	});
-	Event.observeAndStop('complex', 'click', function() {
+	$('complex').observe('click', function(event) {
+		event.stop();
 		var b1 = new Element('a', {href: '#'}).update('Open confirm'),
 			b2 = new Element('a', {href: '#'}).update('Open dialog');
-		Event.observeAndStop(b1, 'click', function() {
+		b1.observe('click', function(event) {
+			event.stop();
 			Dialog.confirm('Close all dialogs?', function(yes) {
 				if (yes) {
 					Dialog.closeAll();
 				}
 			});
 		});
-		Event.observeAndStop(b2, 'click', function() {
+		b2.observe('click', function(event) {
+			event.stop();
 			new Dialog.Base({content: b1});
 		});
 		Dialog.alert(b2);

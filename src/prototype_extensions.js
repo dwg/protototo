@@ -12,30 +12,35 @@
 	}
 })();
 
-document.observe('dom:loaded', function() {
-	Prototype.CSSFeatures = {
-		PositionFixed: (function() {
-			var isSupported = null;
-			if (document.createElement) {
-				var el = document.createElement("div");
-				if (el && el.style) {
-					el.style.width = "1px";
-					el.style.height = "1px";
-					el.style.position = "fixed";
-					el.style.top = "10px";
-					var root = document.body;
-					if (root && root.appendChild && root.removeChild) {
-						root.appendChild(el);
-						isSupported = el.offsetTop === 10;
-						root.removeChild(el);
-					}
-					el = null;
+Prototype.CSSFeatures = window.Prototype.CSSFeatures || {};
+(function() {
+	function positionFixedSupported() {
+		var isSupported = null;
+		if (document.createElement) {
+			var el = document.createElement("div");
+			if (el && el.style) {
+				el.style.width = "1px";
+				el.style.height = "1px";
+				el.style.position = "fixed";
+				el.style.top = "10px";
+				var root = document.body;
+				if (root && root.appendChild && root.removeChild) {
+					root.appendChild(el);
+					isSupported = el.offsetTop === 10;
+					root.removeChild(el);
 				}
+				el = null;
 			}
-			return isSupported;
-		})()
-	};
-});
+		}
+		Prototype.CSSFeatures.PositionFixed = isSupported;
+	}
+	
+	if (document.loaded) {
+		positionFixedSupported();
+	} else {
+		document.observe('dom:loaded', positionFixedSupported);
+	}
+})();
 
 /** section: Prototype extensions
  * Event
@@ -49,14 +54,7 @@ Object.extend(Event, {
 	**/
 	stopper: function(event) {
 		if (event && Object.isFunction(event.stop)) event.stop();
-	},
-	
-	observeAndStop: Element.observe.wrap(function(proceed, element, eventName, handler) {
-		return proceed.call(proceed, element, eventName, function(e) {
-			e.stop();
-			handler.call(e.element(), e);
-		});
-	})
+	}
 });
 
 /** section: Prototype extensions

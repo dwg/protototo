@@ -1,42 +1,9 @@
 /** section: Tools
- *  class Stylesheet
+ *  Stylesheet
  * 
- *  A class that allows inclusion of stylesheets and querying for the
- *  presence of stylesheets.
+ *  A namespace with utility functions regarding to stylesheets.
 **/
-var Stylesheet = Class.create({
-	/**
-	 *  new Stylesheet(path)
-	 *  - path (String): A path to a stylesheet
-	 * 
-	 *  Creates a `Stylesheet` with the given path.
-	**/
-	initialize: function(path) {
-		this.path = path;
-	},
-	
-	/**
-	 *  Stylesheet#link() -> undefined
-	 *  
-	 *  Creates a `link` tag with this `Stylesheet`s path and appends
-	 *  it to the documents head unless it has already been linked.
-	**/
-	link: function() {
-		Stylesheet.link(this.path);
-	},
-	
-	/**
-	 *  Stylesheet#linked() -> Boolean
-	 *  
-	 *  Returns true it there exists a `link` tag with this `Stylesheet`s
-	 *  path in the document, false otherwise.
-	**/
-	linked: function() {
-		return Stylesheet.linked(this.path);
-	}
-});
-
-Stylesheet.KlassMethods = (function() {
+Stylesheet = (function() {
 	function extractNameFromPath(path) {
 		var match = /[^\/]+\.css(?=\?|$)/.exec(path);
 		if (match) {
@@ -48,16 +15,22 @@ Stylesheet.KlassMethods = (function() {
 	/**
 	 *  Stylesheet.link(path) -> undefined
 	 *  - path (String): A path to a stylesheet
+	 *  
+	 *  Creates a `link` tag with path and appends it to
+	 *  the documents head unless it has already been linked.
 	**/
 	function link(path) {
 		if (!linked(path)) {
-			$$('head').first().appendChild(linkTo(path));
+			document.getElementsByTagName('head')[0].appendChild(linkTo(path));
 		}
 	}
 	
 	/**
 	 *  Stylesheet.linked(path) -> Boolean
 	 *  - path (String): A path to a stylesheet
+	 *  
+	 *  Returns true it there exists a `link` tag with
+	 *  path in the document, false otherwise.
 	**/
 	function linked(path) {
 		return findLink(path) != null;
@@ -97,4 +70,3 @@ Stylesheet.KlassMethods = (function() {
 		linkTo: linkTo
 	};
 })();
-Object.extend(Stylesheet, Stylesheet.KlassMethods);

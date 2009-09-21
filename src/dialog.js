@@ -19,21 +19,25 @@ var Dialog = {};
 	}
 	
 	function linkStylesheets() {
-		new Stylesheet(prefix(Dialog.Options.stylesheetPath)).link();
-		if (Prototype.Browser.IE) new Stylesheet(prefix(Dialog.Options.ieStylesheetPath)).link();
-		if (Prototype.Browser.ltIE7) new Stylesheet(prefix(Dialog.Options.ie6StylesheetPath)).link();
+		Stylesheet.link(prefix(Dialog.Options.stylesheetPath));
 	}
 	
-	function createElements() {
-		var overlay = new Element('div', {id: 'dialog-overlay'}).hide();
-		$(document.body).insert(overlay);
-		if (!Dialog.effects) overlay.setOpacity(Dialog.Options.overlayOpacity);
+	function createOverlay() {
+		Dialog.overlay = new Element('div', {id: 'dialog-overlay'}).hide().setStyle({
+			backgroundColor: '#000', position: 'fixed',
+			top: 0, right: 0, bottom: 0, left: 0 
+		});
+		$(document.body).insert(Dialog.overlay);
+		if (!Dialog.effects) Dialog.overlay.setOpacity(Dialog.Options.overlayOpacity);
 		if (Prototype.Browser.ltIE7) {
-			overlay.appendChild(new Element('iframe'));
+			// To hide select tags
+			var iframe = new Element('iframe');
+			iframe.style.cssText = 'display:none;position:absolute;top:0;left:0;z-index:-1;filter:mask();width:100%;height:100%;';
+			Dialog.overlay.appendChild(iframe);
 		}
 		if (!Prototype.CSSFeatures.PositionFixed) {
 			Dialog.overlayObserver = function() {
-				overlay.fillDocument().centerInViewport();
+				Dialog.overlay.fillDocument().centerInViewport();
 			};
 			Element.observe(window, 'scroll', Dialog.overlayObserver);
 			Element.observe(window, 'resize', Dialog.overlayObserver);
@@ -48,7 +52,7 @@ var Dialog = {};
 	function init() {
 		Dialog.effects = window.Effect !== undef;
 		linkStylesheets();
-		createElements();
+		createOverlay();
 	}
 	
 	/**
@@ -68,7 +72,7 @@ var Dialog = {};
 		maxZ = 100;
 	
 	function coverScreen() {
-		var overlay = $('dialog-overlay');
+		var overlay = Dialog.overlay;
 		overlay.setStyle({zIndex: ++maxZ});
 		if (overlay.visible()) return;
 		$(document.body).fire('screen:covered');
@@ -83,7 +87,7 @@ var Dialog = {};
 	}
 	
 	function releaseScreen() {
-		var overlay = $('dialog-overlay');
+		var overlay = Dialog.overlay;
 		if (!overlay.visible()) return;
 		if (Dialog.effects) {
 			overlay.fade({duration: 0.15, queue: effectsQueue()});
@@ -118,7 +122,7 @@ var Dialog = {};
 			if (modals.size() == 0) {
 				releaseScreen();
 			} else {
-				$('dialog-overlay').setStyle({zIndex: modals.last().getFrame().getStyle('z-index') - 1});
+				Dialog.overlay.setStyle({zIndex: modals.last().getFrame().getStyle('zIndex') - 1});
 			}
 		}
 		registry.unset(dialog.getFrame().identify());
@@ -177,3 +181,4 @@ if (document.loaded) {
 
 //= require "dialog/base"
 //= require "dialog/native"
+//= require "dialog/ajax"

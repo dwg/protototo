@@ -10,7 +10,7 @@ new Test.Unit.Runner({
 	
 	testShouldCloseOnFailure: function() {
 		var dialog = new Dialog.Ajax('/bogus');
-		this.wait(500, function() {
+		this.wait(1000, function() {
 			this.assert(!dialog.dialog.visible());
 		});
 	},

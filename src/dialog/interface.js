@@ -35,7 +35,7 @@ Dialog.Interface = (function() {
 		
 		callback: function(which) {
 			if (this.options[which] && Object.isFunction(this.options[which])) {
-				this.options[which]();
+				return this.options[which]();
 			}
 		}
 	};

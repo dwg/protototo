@@ -22,8 +22,6 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	initialize: function(options) {
 		this.options = Object.extendAll({}, this.defaultOptions, options);
 		this.create();
-		Dialog.register(this);
-		this.show();
 	},
 	
 	getFrame: function() {
@@ -38,6 +36,8 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		this.createElements();
 		this.setContents();
 		this.layout();
+		Dialog.register(this);
+		this.show();
 	},
 	
 	createElements: function() {
@@ -100,7 +100,6 @@ Dialog.Base = Class.create(Dialog.Interface, {
 	
 	/**
 	 *  Dialog.Base#close() -> undefined
-	 *  fires dialog:closing
 	 *  
 	 *  Hides this dialog, removes it from the document
 	 *  and unregisters it

@@ -5,10 +5,8 @@
 **/
 Dialog.Ajax = Class.create(Dialog.Base, {
 	defaultOptions: Object.extendAll({}, Dialog.Base.prototype.defaultOptions, {
-		width: 150,
-		targetWidth: 400,
-		content: '<p style="text-align:center"><img src="' + Dialog.Options.assetPrefix + Dialog.Options.busyImage + '" width="124" height="124" alt="Loading, please wait&#8230;" /></p>',
-		ajax: {method: 'get'}
+		ajax: {method: 'get'},
+		closeOnFailure: true
 	}),
 	
 	initialize: function($super, path, options) {
@@ -16,36 +14,33 @@ Dialog.Ajax = Class.create(Dialog.Base, {
 		$super(options);
 	},
 	
-	createElements: function($super) {
-		$super();
-		this.buttonPanel.element.hide();
-		new Ajax.Request(this.path, Object.extend(this.options.ajax || {}, {
-			onSuccess: this.updateContents.bind(this)
-		}));
+	create: function() {
+		var loader = new Image();
+		loader.onload = function() {
+			this.dialog = new Element('img', {src: loader.src, alt: 'Loading, please wait&#8230;'});
+			$(document.body).insert(this.dialog);
+			this.layout();
+			Dialog.register(this);
+			var request = new Ajax.Request(this.path, Object.extend(this.options.ajax || {}, {
+				onComplete: function(transport) {
+					if (request.success()) {
+						var z = this.dialog.getStyle('zIndex');
+						this.dialog.remove();
+						this.createElements();
+						this.dialog.setStyle({zIndex: z});
+						this.setContents(transport);
+						this.layout();
+						this.show();
+					} else if (this.options.closeOnFailure) {
+						this.close();
+					}
+				}.bind(this)
+			}));
+		}.bind(this);
+		loader.src = Dialog.Options.assetPrefix + Dialog.Options.busyImage;
 	},
 	
-	updateContents: function(transport) {
-		this.dialog.setDimensions();
-		var wrapper = new Element('div').update(transport.responseText);
-		this.contents.update();
-		this.contents.insert(wrapper);
-		
-		if (Dialog.effects) {
-			this.contents.hide();
-			this.dialog.fade({
-				duration: this.options.transitionDuration, queue: Dialog.effectsQueue(),
-				afterFinish: function() {
-					this.contents.show();
-					this.buttonPanel.element.show();
-					this.dialog.setStyle({width: this.options.targetWidth.px(), height: 'auto'});
-					this.layout();
-				}.bind(this)
-			});
-			this.dialog.appear({duration: this.options.transitionDuration, queue: Dialog.effectsQueue()});
-		} else {
-			this.buttonPanel.element.show();
-			this.dialog.setStyle({width: this.options.targetWidth.px(), height: 'auto'});
-			this.layout();
-		}
+	setContents: function(transport) {
+		this.contents.update(transport.responseText);
 	}
 });

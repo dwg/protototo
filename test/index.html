@@ -6,16 +6,16 @@
 		<style type="text/css">
 			body {
 				height: 1000px;
-				font-family: "Helvetica Neue", Arial, Helvetica, clean, sans-serif;
+				font-family: sans-serif;
 				font-size: 13px;
-				font-size-adjust: none;
-				font-style: normal;
-				font-weight: normal;
 				line-height: 1.231;
 			}
 			p {
 				font-size: 108%;
 				margin: 0 0 .5em;
+			}
+			.dialog-message .dialog-buttons {
+				clear: both;
 			}
 		</style>
 	</head>
@@ -25,7 +25,10 @@
 			<a id="confirm" href="#">Show me a confirm</a><br/>
 			<a id="prompt" href="#">Show me a prompt</a><br/>
 			<a id="custom" href="#">Custom window</a><br/>
-			<a id="complex" href="#">Complex window</a><br/>
+			<a id="complex" href="#">Complex windows</a><br/>
+			<a id="info" href="#">Info message</a><br/>
+			<a id="warn" href="#">Warning message</a><br/>
+			<a id="error" href="#">Error message</a><br/>
 		</p>
 		<p style="text-align: center"><img src="./images/info.png" alt="" /></p>
 		<script type="text/javascript" src="./javascripts/prototype.js"></script>
@@ -41,6 +44,30 @@ DialogOptions = {
 		<script type="text/javascript" src="../dist/proto-dialogs.js"></script>
 		<script type="text/javascript">
 //<![CDATA[
+// Playground
+Dialog.Message = (function() {
+	var titles = {info: 'Information', warning: 'Warning', error: 'Error'};
+	
+	function message(kind, content) {
+		new Dialog.Base({
+			content: [
+				'<img src="./images/' + kind + '.png" alt="" style="float: left; margin: 0 10px 10px 0;" />',
+				'<h3>' + titles[kind] + '</h3>',
+				content
+			],
+			modal: true,
+			buttons: [{text: 'Ok', close: true, onclick: Event.stopper}],
+			className: 'dialog-message'
+		});
+	}
+	
+	return {
+		info: message.curry('info'),
+		warning: message.curry('warning'),
+		error: message.curry('error')
+	};
+})();
+
 document.observe('dom:loaded', function() {
 	$('alert').observe('click', function(event) {
 		event.stop();
@@ -99,6 +126,18 @@ document.observe('dom:loaded', function() {
 			new Dialog.Base({content: b1});
 		});
 		Dialog.alert(b2);
+	});
+	$('info').observe('click', function(event) {
+		event.stop();
+		Dialog.Message.info('<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris scelerisque fringilla mauris ut tincidunt. Quisque consectetur nunc sit amet orci scelerisque ut lobortis mauris lacinia. Phasellus porta, tellus in suscipit congue, odio erat mollis libero, sed gravida magna purus id purus.</p>');
+	});
+	$('warn').observe('click', function(event) {
+		event.stop();
+		Dialog.Message.warning('This is a warning message!');
+	});
+	$('error').observe('click', function(event) {
+		event.stop();
+		Dialog.Message.error('This is an error message!');
 	});
 });
 //]]>

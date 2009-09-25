@@ -1,14 +1,124 @@
-= proto-dialogs
+proto-dialogs
+    by Arni Einarsson (dwg)
+    http://dwg.lighthouseapp.com/projects/37440-proto-dialogs
+
+== DESCRIPTION:
 
 An implementation of lightbox style dialogs to replace native browser
 dialogs (alert, confirm, prompt).
 
-The purpose of this project is for me to improve my javascript skills
-and have fun with prototype and scriptaculous.
+== FEATURES/PROBLEMS:
 
-This project is still a work in progress.
+* Sprocketized
+* Effects are optional
+* Customizable via css and asset paths
+* Easily extendable
+* Unit tested
 
-== License 
+== SYNOPSIS:
+
+==== Showing simple alerts
+
+  Dialog.alert('This is a dialog');
+
+==== Getting confirmation
+  
+  Dialog.confirm('Are you sure?', function(yes) {
+  	if (yes) Dialog.alert('Good for you');
+  	else Dialog.alert('Boohoo');
+  });
+
+==== Prompting a question
+
+  Dialog.prompt('What is your name?', function(answer) {
+  	if (answer) Dialog.alert('Hi, ' + answer);
+  	else Dialog.alert('How rude!');
+  });
+
+==== Loading ajax content
+
+  new Dialog.Ajax('/path/to/content');
+
+==== Doing something custom
+
+  new Dialog.Base({
+    content: '<form action="/login" method="post"><p><label for="login">Login</label><br/><input type="text" name="login" id="login"/></p><p><label for="password">Password</label><br/><input type="password" name="password" id="password"/></p></form>',
+    buttons: [
+      {text: 'Login', close: false, onclick: function(event) {
+        event.stop();
+        event.element().up('.dialog').down('form').submit();
+      }},
+      {text: 'Cancel', close: true, onclick: Event.stopper}
+    ],
+    afterShow: function() {
+      Dialog.current().contents.down('input').activate();
+    }
+  });
+
+==== Options to dialogs
+
+You can set proto-dialog defaults via +DialogOptions+.
+
+By default proto-dialogs assumes that asset paths are:
+
+* /images/proto-dialogs
+* /stylesheets/proto-dialogs
+
+If you want these to be different you can specify options before loading
+proto-dialogs:
+
+  DialogOptions = {
+    assetPrefix: '/your/prefix', 
+    stylesheetPath: '/path/to/stylesheet.css', // will look in /your/prefix/path/to/stylesheet.css
+    busyImage: '/path/to/ajax/working.gif' // will look in /your/prefix/path/to/ajax/working.gif
+  };
+
+Other default options for all dialogs (these are the actual defaults):
+
+  DialogOptions = {
+    overlayOpacity: 0.75,
+    transitionDuration: 0.4,
+    defaultWidth: 400,
+    Buttons: {
+      template: new Template('<a href="#" class="#{className}">#{text}</a>') // how to build buttons
+    }
+  };
+
+Options you can pass to dialogs to override defaults:
+
++width+:: overrides the default width
++modal+:: true if you want to simulate a modal dialog
++transitionDuration+:: overrides the default transition time
++buttons+:: an array of button descriptions
+
+Button descriptions depend on the template used to create buttons.
+For a template like
+
+  <a href="#" class="#{className}">#{text}</a>
+
+the description should include at least +text+ and optionally a +className+.
+Additionally each button description accepts
+
++close+:: true if you want the button to close the dialog
++onclick+:: a function to execute when the button is clicked
+
+== REQUIREMENTS:
+
+* Prototype 1.6.1
+* Script.aculo.us effects 1.8.2 (preferred but not required)
+
+== INSTALL:
+
+* Download http://cloud.github.com/downloads/dwg/proto-dialogs/proto-dialogs-1.0.tar.gz
+* Extract tar ball
+* Copy the contents of dist to your server
+* Include the following in the html where you want proto-dialogs:
+
+  <script type="text/javascript" src="path/to/prototype.js"></script>
+  <script type="text/javascript" src="path/to/effects.js"></script>
+  <script type="text/javascript" src="path/to/proto-dialogs.js"></script>
+
+== LICENSE:
 
 (The MIT License)
 

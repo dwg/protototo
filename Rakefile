@@ -1,8 +1,11 @@
 require 'rake'
+require 'rake/packagetask'
+require 'yaml'
 
 DIALOGS_ROOT          = File.expand_path(File.dirname(__FILE__))
 DIALOGS_SRC_DIR       = File.join(DIALOGS_ROOT, 'src')
 DIALOGS_DIST_DIR      = File.join(DIALOGS_ROOT, 'dist')
+DIALOGS_PKG_DIR       = File.join(DIALOGS_ROOT, 'pkg')
 DIALOGS_TEST_DIR      = File.join(DIALOGS_ROOT, 'test')
 DIALOGS_TEST_UNIT_DIR = File.join(DIALOGS_TEST_DIR, 'unit')
 DIALOGS_TMP_DIR       = File.join(DIALOGS_TEST_UNIT_DIR, 'tmp')
@@ -10,12 +13,12 @@ DIALOGS_VERSION       = YAML.load(IO.read(File.join(DIALOGS_ROOT, 'config', 'con
 
 $:.unshift File.join(DIALOGS_ROOT, 'vendor', 'sprockets', 'lib')
 
-desc "Print the Dialogs library version"
+desc "Print the proto-dialogs version"
 task :version do
-  puts "Dialogs version #{DIALOGS_VERSION}"
+  puts "proto-dialogs version #{DIALOGS_VERSION}"
 end
 
-task :default => :dist
+task :default => [:dist, :package, :clean_package_source]
 
 desc "Clean the distribution folder"
 task :clean do
@@ -45,6 +48,23 @@ task :dist => :clean do
   
   secretary.concatenation.save_to(File.join(DIALOGS_DIST_DIR, 'proto-dialogs.js'))
   secretary.install_assets
+end
+
+Rake::PackageTask.new('proto-dialogs', DIALOGS_VERSION) do |package|
+  package.need_tar_gz = true
+  package.package_dir = DIALOGS_PKG_DIR
+  package.package_files.include(
+    'CHANGELOG',
+    'README.rdoc',
+    'dist/**',
+    'examples/**',
+    'src/**',
+    'test/**'
+  )
+end
+
+task :clean_package_source do
+  rm_rf File.join(DIALOGS_PKG_DIR, "proto-dialogs-#{DIALOGS_VERSION}")
 end
 
 task :test => ['test:build', 'test:run']

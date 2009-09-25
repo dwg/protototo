@@ -1,3 +1,13 @@
+=== 1.0 / 2009-09-24
+
+* Upgrade requirement to Prototype 1.6.1
+
+* Supporting ajax content
+
+* Added access to current active dialog
+
+* Added callback mechanism
+
 * Fires screen:covered and screen:released on covering and releasing screen
 
 * Alternatives to native dialogs

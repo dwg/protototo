@@ -5,8 +5,8 @@
 **/
 Dialog.Options = Object.extend({
 	assetPrefix: '',
-	stylesheetPath: '/stylesheets/proto-dialogs/dialogs.css',
-	busyImage: '/images/proto-dialogs/loading.gif',
+	stylesheetPath: '/stylesheets/protototo/dialogs.css',
+	busyImage: '/images/protototo/loading.gif',
 	overlayOpacity: 0.75,
 	transitionDuration: 0.4,
 	defaultWidth: 400

@@ -1,16 +1,14 @@
-//= require <prototype>
-//= prefer <effects>
 //= provide "../assets"
 
-/*  proto-dialogs
- *  JavaScript framework, version <%= PROTO_DIALOGS_VERSION %>
+/*  protototo
+ *  JavaScript framework, version <%= PROTOTOTO_VERSION %>
  *  (c) 2009 Arni Einarsson
  *
- *  proto-dialogs is freely distributable under the terms of an MIT-style license.
+ *  protototo is freely distributable under the terms of an MIT-style license.
  *--------------------------------------------------------------------------*/
 
-var ProtoDialogs = {
-	Version: '<%= PROTO_DIALOGS_VERSION %>',
+var Protototo = {
+	Version: '<%= PROTOTOTO_VERSION %>',
 	MinimumPrototypeVersion: '<%= REQUIRED_PROTOTYPE %>'
 };
 
@@ -24,8 +22,8 @@ var ProtoDialogs = {
 	}
 	
 	if(window.Prototype === undef || window.Element === undef || Element.Methods === undef ||
-	  parse(Prototype.Version) < parse(ProtoDialogs.MinimumPrototypeVersion)) {
-		throw('proto-dialogs requires the Prototype JavaScript framework version ' + ProtoDialogs.MinimumPrototypeVersion + ' or greater');
+	  parse(Prototype.Version) < parse(Protototo.MinimumPrototypeVersion)) {
+		throw('protototo requires the Prototype JavaScript framework version ' + Protototo.MinimumPrototypeVersion + ' or greater');
 	}
 })();
 

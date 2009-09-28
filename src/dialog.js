@@ -159,7 +159,7 @@ var Dialog = {};
 	**/
 	function log(kind, message) {
 		if (console && console[kind]) {
-			console[kind]('proto-dialogs: ' + message);
+			console[kind]('protototo: ' + message);
 		}
 	}
 	

@@ -50,7 +50,7 @@ task :dist => :clean do
   secretary.install_assets
 end
 
-Rake::PackageTask.new('protototo', DIALOGS_VERSION) do |package|
+Rake::PackageTask.new('protototo', "v#{DIALOGS_VERSION}") do |package|
   package.need_tar_gz = true
   package.package_dir = DIALOGS_PKG_DIR
   package.package_files.include(
@@ -66,7 +66,7 @@ Rake::PackageTask.new('protototo', DIALOGS_VERSION) do |package|
 end
 
 task :clean_package_source do
-  rm_rf File.join(DIALOGS_PKG_DIR, "protototo-#{DIALOGS_VERSION}")
+  rm_rf File.join(DIALOGS_PKG_DIR, "protototo-v#{DIALOGS_VERSION}")
 end
 
 task :test => ['test:build', 'test:run']

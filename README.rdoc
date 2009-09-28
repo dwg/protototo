@@ -57,7 +57,7 @@ dialogs (alert, confirm, prompt).
 
 ==== Options to dialogs
 
-You can set proto-dialog defaults via +DialogOptions+.
+You can set protototo defaults via +DialogOptions+.
 
 By default protototo assumes that asset paths are:
 
@@ -109,7 +109,7 @@ Additionally each button description accepts
 
 == INSTALL:
 
-* Download http://cloud.github.com/downloads/dwg/protototo/protototo-1.0.tar.gz
+* Download http://cloud.github.com/downloads/dwg/protototo/protototo-v1.0.tar.gz
 * Extract tar ball
 * Copy the contents of dist to your server
 * Include the following in the html where you want protototo:

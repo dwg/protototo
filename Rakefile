@@ -118,7 +118,7 @@ Rake::PackageTask.new('protototo', "#{Protototo::VERSION}") do |package|
   package.package_dir = Protototo::PKG_DIR
   package.package_files.include(
     'CHANGELOG',
-    'README.rdoc',
+    'README.markdown',
     'dist/**/*',
     'examples/**/*',
     'src/**/*',

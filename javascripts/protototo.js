@@ -1,4 +1,3 @@
-
 /*  protototo
  *  JavaScript framework, version 1.0
  *  (c) 2009 Arni Einarsson
@@ -219,9 +218,9 @@ Stylesheet = (function() {
 var Dialog = {};
 
 Dialog.Options = Object.extend({
-	assetPrefix: '',
-	stylesheetPath: '/stylesheets/protototo/dialogs.css',
-	busyImage: '/images/protototo/loading.gif',
+	assetPrefix: '/',
+	stylesheetPath: 'stylesheets/protototo/dialogs.css',
+	busyImage: 'images/protototo/loading.gif',
 	overlayOpacity: 0.75,
 	transitionDuration: 0.4,
 	defaultWidth: 400
@@ -267,7 +266,7 @@ Dialog.Options = Object.extend({
 
 	function effectsQueue() {
 		var position = arguments[0] || 'end';
-		return {position: position, scope: 'dialogs'};
+		return {position: position, scope: 'protototo'};
 	}
 
 	var registry = new Hash(),
@@ -410,7 +409,7 @@ Dialog.ButtonPanel = (function() {
 			this.element = new Element('div', {className: 'dialog-buttons'});
 		},
 		addButton: function(buttonOptions) {
-			buttonOptions = Object.extend({className: 'dialog-button'}, buttonOptions);
+			buttonOptions = Object.extend({className: 'dialog-button', onclick: Event.stopper}, buttonOptions);
 			var button = buildButton(this.options.template, buttonOptions);
 			this.element.insert(button);
 			if (buttonOptions.close) {
@@ -429,7 +428,7 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		width: Dialog.Options.defaultWidth,
 		modal: false,
 		transitionDuration: Dialog.Options.transitionDuration,
-		buttons: [{text: 'Close', close: true, onclick: Event.stopper}]
+		buttons: [{text: 'Close', close: true}]
 	},
 
 	initialize: function(options) {

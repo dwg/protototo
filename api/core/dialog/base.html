@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Prototype API documentation | Dialog.Base class</title>
+	  <meta name="generator" content="PDoc" />
+	  
+	  <script type="text/javascript" src="../../javascripts/prototype.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../javascripts/effects.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../javascripts/controls.js" charset="utf-8"></script>
+	  <script type="text/javascript" src="../../javascripts/application.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../javascripts/code_highlighter.js" charset="utf-8"></script>
+
+	  <script type="text/javascript" src="../../javascripts/item_index.js" charset="utf-8"></script>
+	  	  
+	  <link type="text/css" rel="stylesheet" href="../../stylesheets/core.css" media="screen, projection" charset="utf-8" />
+<link type="text/css" rel="stylesheet" href="../../stylesheets/api.css" media="screen, projection" charset="utf-8" />
+	  
+	  <script type="text/javascript">PDoc.pathPrefix = '../../';</script>
+  </head>
+  <body class="">
+    <div id="page">
+      
+      <div id="masthead">
+        <div id="masthead_content">
+          <a href="http://prototypejs.org">
+            <h1 id="logo"><span class="replaced">Prototype JavaScript framework</span></h1>
+          </a>
+        </div> <!-- #masthead_content -->
+      </div> <!-- #masthead -->
+      
+      <div id="menu" class="clearfix">
+        <div class="api-box">
+          <h2><a href="#" id="api_menu_button">Menu &darr;</a></h2>
+          
+    			<ul id="api_menu" class="menu-items" style="display: none">
+    				
+    					<li class="current-parent">              <div class='menu-item'>
+                <a class="section" href="../../core_section.html" title="Core section (section)">Core section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="utility" href="../../core/dollaralert.html" title="$alert (utility)">$alert</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="utility" href="../../core/dollarconfirm.html" title="$confirm (utility)">$confirm</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="utility" href="../../core/dollarprompt.html" title="$prompt (utility)">$prompt</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" href="../../core/dialog.html" title="Dialog (namespace)">Dialog</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" href="../../core/dialog/ajax.html" title="Dialog.Ajax (class)">Dialog.Ajax</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="class" href="../../core/dialog/base.html" title="Dialog.Base (class)">Dialog.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" href="../../core/dialog/buttonpanel.html" title="Dialog.ButtonPanel (class)">Dialog.ButtonPanel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" href="../../core/dialog/interface.html" title="Dialog.Interface (mixin)">Dialog.Interface</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" href="../../core/dialog/native.html" title="Dialog.Native (mixin)">Dialog.Native</a>
+              </div>
+</li></ul></li></ul></li>
+    				
+    					<li>              <div class='menu-item'>
+                <a class="section" href="../../language_section.html" title="Language section (section)">Language section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" href="../../language/number.html" title="Number (class)">Number</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" href="../../language/object.html" title="Object (class)">Object</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" href="../../language/string.html" title="String (class)">String</a>
+              </div>
+</li></ul></li>
+    				
+    					<li>              <div class='menu-item'>
+                <a class="section" href="../../prototype_section.html" title="Prototype section (section)">Prototype section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" href="../../prototype/element.html" title="Element (class)">Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" href="../../prototype/event.html" title="Event (class)">Event</a>
+              </div>
+</li></ul></li>
+    				
+    					<li>              <div class='menu-item'>
+                <a class="section" href="../../tools_section.html" title="Tools section (section)">Tools section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" href="../../tools/stylesheet.html" title="Stylesheet (namespace)">Stylesheet</a>
+              </div>
+</li></ul></li>
+    				
+    			</ul>          
+        </div> <!-- .api-box -->
+
+        <div class="search-box">
+  			  <form>
+    			  <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
+  			  </form>
+  			  <ul id="search_results" class="search-results menu-items" style="display:none"></ul>
+        </div> <!-- .search-box -->
+
+      </div> <!-- #menu -->
+      
+      <div id="main" class="page-content">
+        
+        
+
+
+
+<ul class="breadcrumbs clearfix">
+  <li><a href="../../index.html">Home</a> &rarr;</li>
+  
+  <li><a href="../../core_section.html">Core</a> &rarr;</li>
+  
+</ul>
+
+<h2 class="page-title class">
+  <span class="type">class </span>Dialog.Base
+</h2>
+
+
+<div class="section section-description">
+  
+  <div class="section-title">
+    <h3>Description</h3>
+  </div> <!-- .section-title -->
+  
+  <div class="section-content">
+    <p>A base class for all dialogs.</p>
+  </div> <!-- .section-content -->
+  
+</div> <!--.section -->
+
+
+
+
+  
+
+  
+  <div class="section section-subclasses">
+    <div class="section-title">
+      <h3>Subclasses</h3>     
+    </div> <!-- .section-title -->
+    
+    <div class="section-content">
+      <p><code><a href="../../core/dialog/ajax.html" title="Dialog.Ajax (class)">Dialog.Ajax</a></code></p>     
+    </div> <!-- .section-content -->
+  </div> <!-- .section -->    
+  
+
+
+
+
+  <div class="section section-mixins">
+    <div class="section-title">
+      <h3>Includes</h3>      
+    </div> <!-- .section-title -->
+    
+    <div class="section-content">
+      <p><code><a href="../../core/dialog/interface.html" title="Dialog.Interface (mixin)">Dialog.Interface</a></code></p>      
+    </div> <!-- .section-content -->
+  </div> <!-- .section -->
+
+
+
+
+
+<div class="section section-method-list">
+  <div class="section-title">
+    <h3>Methods</h3>
+  </div> <!-- .section-title -->
+  
+  <div class="section-content">
+    <ul class="method-list">
+      
+        <li><code><a class="instance-method" href="../../core/dialog/base.html#close-instance_method" title="Dialog.Base#close (instance method)">close</a></code></li>
+      
+        <li><code><a class="instance-method" href="../../core/dialog/base.html#hide-instance_method" title="Dialog.Base#hide (instance method)">hide</a></code></li>
+      
+        <li><code><a class="instance-method" href="../../core/dialog/base.html#layout-instance_method" title="Dialog.Base#layout (instance method)">layout</a></code></li>
+      
+        <li><code><a class="constructor" href="../../core/dialog/base.html#new-constructor" title="new Dialog.Base (constructor)">new</a></code></li>
+      
+        <li><code><a class="instance-method" href="../../core/dialog/base.html#setcontents-instance_method" title="Dialog.Base#setContents (instance method)">setContents</a></code></li>
+      
+        <li><code><a class="instance-method" href="../../core/dialog/base.html#show-instance_method" title="Dialog.Base#show (instance method)">show</a></code></li>
+      
+    </ul>
+    
+    
+      
+      <h4 class="inherited">Inherited from <a href="../../core/dialog/interface.html" title="Dialog.Interface (mixin)">Interface</a></h4>
+      <ul class="method-list">
+        
+          <li><code><a class="class-method" href="../../core/dialog/interface.html#close-class_method" title="Dialog.Interface.close (class method)">close</a></code></li>
+        
+          <li><code><a class="class-method" href="../../core/dialog/interface.html#getframe-class_method" title="Dialog.Interface.getFrame (class method)">getFrame</a></code></li>
+        
+          <li><code><a class="class-method" href="../../core/dialog/interface.html#ismodal-class_method" title="Dialog.Interface.isModal (class method)">isModal</a></code></li>
+        
+      </ul>
+      
+    
+    
+    
+  </div> <!-- .section-content -->
+    
+</div> <!-- .section -->
+
+
+
+<div class="section section-constructor">
+  <div class="section-title">
+    <h3>Constructor</h3>
+  </div> <!-- .section-title -->
+
+  <div class="section-content">
+    <pre id="new-constructor" class="syntax"><code>new Dialog.Base(options)</code></pre>
+    
+      <ul class="argument-list">
+        
+          <li>
+            <code>options</code>
+            
+              (<code><a href="../../language/object.html" title="Object (class)">Object</a></code>)
+            
+             &ndash; options for this dialog
+          </li>
+        
+      </ul> <!-- .argument-list -->
+    
+    
+
+    <p><p>Supported options:</p>
+
+<ul>
+<li><code>width</code> (String | Number): the desired width of the dialog. By default set to Dialog.Options.defaultWidth.</li>
+
+<li><code>modal</code> (Boolean): true to simulate a modal dialog, false otherwise (the default).</li>
+
+<li><code>transitionDuration</code> (Number): if using effects will determine the duration of each effects transition. By default set to Dialog.Options.transitionDuration.</li>
+
+<li><code>buttons</code> (Array): list of button descriptions for the dialog. See <code><a href='../../core/dialog/buttonpanel.html#addbutton-instance_method' title='Dialog.ButtonPanel#addButton (instance method)'>Dialog.ButtonPanel#addButton</a></code> for details. By default a dialog includes one button with the text &#8220;Close&#8221; which closes the dialog.</li>
+</ul></p>
+    
+  </div> <!-- .section-content -->
+  
+</div> <!-- .section -->
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="section section-instance_methods">
+      
+      <div class="section-title">
+        <h3>Instance methods</h3>        
+      </div> <!-- .section-title -->
+      
+      <div class="section-content">
+        <ul class="method-details-list">
+          <li class="method-description">
+  <h4 id="close-instance_method">close
+    <span class="method-permalink"><a href="../../core/dialog/base.html#close-instance_method">#</a></span></h4>
+
+  
+    <pre class="syntax"><code class="ebnf">Dialog.Base#close() &rArr; undefined<br /></code></pre>
+  
+  
+  
+    
+  
+  
+	<p>Hides this dialog, removes it from the document and unregisters it</p>
+  
+  
+  
+  
+  
+  
+    
+  
+  
+</li>
+
+<li class="method-description">
+  <h4 id="hide-instance_method">hide
+    <span class="method-permalink"><a href="../../core/dialog/base.html#hide-instance_method">#</a></span></h4>
+
+  
+    <pre class="syntax"><code class="ebnf">Dialog.Base#hide([callback]) &rArr; undefined<br /></code></pre>
+  
+  
+  
+    
+  
+  
+	<p>Hides this dialog and calls <code>callback</code> if present</p>
+  
+  
+  
+  
+  
+  
+    
+  
+  
+</li>
+
+<li class="method-description">
+  <h4 id="layout-instance_method">layout
+    <span class="method-permalink"><a href="../../core/dialog/base.html#layout-instance_method">#</a></span></h4>
+
+  
+    <pre class="syntax"><code class="ebnf">Dialog.Base#layout() &rArr; undefined<br /></code></pre>
+  
+  
+  
+    
+  
+  
+	<p>Centers this dialog on the current viewport</p>
+  
+  
+  
+  
+  
+  
+    
+  
+  
+</li>
+
+<li class="method-description">
+  <h4 id="setcontents-instance_method">setContents
+    <span class="method-permalink"><a href="../../core/dialog/base.html#setcontents-instance_method">#</a></span></h4>
+
+  
+    <pre class="syntax"><code class="ebnf">Dialog.Base#setContents() &rArr; undefined<br /></code></pre>
+  
+  
+  
+    
+  
+  
+	<p>Override this method or pass <code>content</code> as an option to the constructor to set the contents of the dialog.</p>
+  
+  
+  
+  
+  
+  
+    
+  
+  
+</li>
+
+<li class="method-description">
+  <h4 id="show-instance_method">show
+    <span class="method-permalink"><a href="../../core/dialog/base.html#show-instance_method">#</a></span></h4>
+
+  
+    <pre class="syntax"><code class="ebnf">Dialog.Base#show() &rArr; undefined<br /></code></pre>
+  
+  
+  
+    
+  
+  
+	<p>Shows this dialog</p>
+  
+  
+  
+  
+  
+  
+    
+  
+  
+</li>
+
+        </ul>    
+        
+      </div> <!-- .section-content -->
+    </div> <!-- .section -->
+  
+
+  
+  
+
+
+      </div> <!-- #main -->
+      
+      <div id="footer">
+        
+        <div class="about clearfix">
+          <div class="copyright clearfix">
+            <div class="cc">
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://creativecommons.org/images/public/somerights20.png" /></a>
+            </div> <!-- .cc -->
+            <div class="copyright-about">
+              This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.
+            </div> <!-- .copyright-about -->
+          </div> <!-- .copyright -->
+          
+          <div class="credits">
+            <p>Generated by <a href="http://pdoc.org">PDoc</a>. Uses <a href="http://famfamfam.com/lab/icons/silk/" title="famfamfam.com: Silk Icons">Silk Icons</a>.</p>
+            
+          </div> <!-- .credits -->
+          
+        </div> <!-- .about -->
+        
+        
+      </div> <!-- #footer -->
+            
+    </div> <!-- #page -->
+
+</body>
+</html>

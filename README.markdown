@@ -114,11 +114,12 @@ Additionally each button description accepts
 * Download <http://cloud.github.com/downloads/dwg/protototo/protototo-v1.0.tar.gz>
 * Extract tar ball
 * Copy the contents of dist to your server
-* Include the following in the html where you want protototo:
 
-      <script type="text/javascript" src="path/to/prototype.js"></script>
-      <script type="text/javascript" src="path/to/effects.js"></script>
-      <script type="text/javascript" src="path/to/protototo.js"></script>
+Then include the following in the html where you want protototo:
+
+    <script type="text/javascript" src="path/to/prototype.js"></script>
+    <script type="text/javascript" src="path/to/effects.js"></script>
+    <script type="text/javascript" src="path/to/protototo.js"></script>
 
 ## LICENSE:
 

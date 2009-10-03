@@ -1,8 +1,9 @@
 //= require "interface"
 //= require "button_panel"
 
-/** section: Dialog
- *  class Dialog.Base
+/** section: Core
+ * class Dialog.Base
+ * includes Dialog.Interface
  *  
  *  A base class for all dialogs.
 **/
@@ -11,14 +12,27 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		width: Dialog.Options.defaultWidth,
 		modal: false,
 		transitionDuration: Dialog.Options.transitionDuration,
-		buttons: [{text: 'Close', close: true, onclick: Event.stopper}]
+		buttons: [{text: 'Close', close: true}]
 	},
 	
-	/**
-	 *  new Dialog.Base(options[, opener])
-	 *  - options (Object): options for this dialog
-	 *  - opener (Element): the element triggering this dialog
-	**/
+    /**
+     *  new Dialog.Base(options)
+     *  - options (Object): options for this dialog
+     *  
+     *  Supported options:
+     *  
+     *  * `width` (String | Number): the desired width of the dialog.
+     *    By default set to [[Dialog.Options.defaultWidth]].
+     *  * `modal` (Boolean): true to simulate a modal dialog,
+     *    false otherwise (the default).
+     *  * `transitionDuration` (Number): if using effects will determine the
+     *    duration of each effects transition. By default set to
+     *    [[Dialog.Options.transitionDuration]].
+     *  * `buttons` (Array): list of button descriptions for the dialog.
+     *    See [[Dialog.ButtonPanel#addButton]] for details.
+     *    By default a dialog includes one button with the text "Close"
+     *    which closes the dialog.
+    **/
 	initialize: function(options) {
 		this.options = Object.extendAll({}, this.defaultOptions, options);
 		this.create();
@@ -52,20 +66,20 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		$(document.body).insert(this.dialog);
 	},
 	
-	/**
-	 *  Dialog.Base#layout() -> undefined
-	 *  
-	 *  Centers this dialog on the current viewport
-	**/
+    /**
+     *  Dialog.Base#layout() -> undefined
+     *  
+     *  Centers this dialog on the current viewport
+    **/
 	layout: function() {
 		this.dialog.centerInViewport({minLeft: 10, minTop: 10});
 	},
 	
-	/**
-	 *  Dialog.Base#show() -> undefined
-	 *  
-	 *  Shows this dialog
-	**/
+    /**
+     *  Dialog.Base#show() -> undefined
+     *  
+     *  Shows this dialog
+    **/
 	show: function() {
 		if (this.dialog.visible()) return;
 		this.callback('beforeShow');
@@ -80,11 +94,11 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		}
 	},
 	
-	/**
-	 *  Dialog.Base#hide([callback]) -> undefined
-	 *  
-	 *  Hides this dialog and calls `callback` if present
-	**/
+    /**
+     *  Dialog.Base#hide([callback]) -> undefined
+     *  
+     *  Hides this dialog and calls `callback` if present
+    **/
 	hide: function(callback) {
 		if (!this.dialog.visible()) return;
 		if (Dialog.effects) {
@@ -98,12 +112,12 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		}
 	},
 	
-	/**
-	 *  Dialog.Base#close() -> undefined
-	 *  
-	 *  Hides this dialog, removes it from the document
-	 *  and unregisters it
-	**/
+    /**
+     *  Dialog.Base#close() -> undefined
+     *  
+     *  Hides this dialog, removes it from the document
+     *  and unregisters it
+    **/
 	close: function() {
 		if (this.closing) return;
 		this.closing = true;
@@ -115,12 +129,12 @@ Dialog.Base = Class.create(Dialog.Interface, {
 		}.bind(this));
 	},
 	
-	/**
-	 *  Dialog.Base#setContents() -> undefined
-	 *  
-	 *  Override this method or pass `content` as an option to
-	 *  the constructor to set the contents of the dialog.
-	**/
+    /**
+     *  Dialog.Base#setContents() -> undefined
+     *  
+     *  Override this method or pass `content` as an option to
+     *  the constructor to set the contents of the dialog.
+    **/
 	setContents: function() {
 		[this.options.content].flatten().each(function(c) {
 			this.contents.insert(c);

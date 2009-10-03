@@ -1,5 +1,5 @@
-/** section: Dialog
- *  class Dialog.Ajax
+/** section: Core
+ * class Dialog.Ajax < Dialog.Base
  *  
  *  A base class for dialogs supporting ajax content.
 **/
@@ -9,6 +9,18 @@ Dialog.Ajax = Class.create(Dialog.Base, {
 		closeOnFailure: true
 	}),
 	
+    /**
+     *  new Dialog.Ajax(path, options)
+     *  - path (String): the ajax request path
+     *  - options (Object): options for this dialog
+     *  
+     *  Options in addition to ones described for [[Dialog.Base]]:
+     *  
+     *  * `ajax` (Object): options to pass to the ajax request.
+     *    By default set to `{method: 'get'}`.
+     *  * `closeOnFailure` (Boolean): true if the dialog should be
+     *    closed on ajax failure (the default).
+    **/
 	initialize: function($super, path, options) {
 		this.path = path;
 		$super(options);

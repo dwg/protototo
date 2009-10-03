@@ -4,3 +4,4 @@ dist/*
 test/unit/tmp/*
 .tmp_*
 pkg/*
+doc/*

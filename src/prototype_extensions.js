@@ -1,5 +1,5 @@
 /**
- * == Prototype extensions ==
+ * == Prototype ==
  * Additions to the Prototype library.
 **/
 
@@ -12,6 +12,11 @@
 	}
 })();
 
+/** section: Prototype
+ *  Prototype.CSSFeatures.PosititionFixed -> Boolean
+ *  
+ *  True if the browser supports `position: fixed`, false otherwise.
+**/
 Prototype.CSSFeatures = window.Prototype.CSSFeatures || {};
 (function() {
 	function positionFixedSupported() {
@@ -42,33 +47,33 @@ Prototype.CSSFeatures = window.Prototype.CSSFeatures || {};
 	}
 })();
 
-/** section: Prototype extensions
- * Event
+/** section: Prototype
+ * class Event
 **/
 Object.extend(Event, {
-	/**
-	 *  Event.stopper(event) -> undefined
-	 *  - event (Event): an event object
-	 *  
-	 *  A generic event handler that stops bubbling
-	**/
+    /**
+     *  Event.stopper(event) -> undefined
+     *  - event (Event): an event object
+     *  
+     *  A generic event handler that stops bubbling
+    **/
 	stopper: function(event) {
 		if (event && Object.isFunction(event.stop)) event.stop();
 	}
 });
 
-/** section: Prototype extensions
- * Element
+/** section: Prototype
+ * class Element
 **/
 Object.extend(Element.Methods, {
-	/**
-	 *  Element.centerInViewport(@element[, options]) -> Element
-	 *  - element (Element | String): the element or id of element to center.
-	 *  - options (Object): Top and left boundaries, defaults to {minTop: -Infinity, minLeft: -Infinity}.
-	 *  
-	 *  Centers element in viewport. If no position has been specified (i.e. position is `undefined` or 'static')
-	 *  will be absolutely positioned. 
-	**/
+    /**
+     *  Element.centerInViewport(@element[, options]) -> Element
+     *  - element (Element | String): the element or id of element to center.
+     *  - options (Object): Top and left boundaries, defaults to {minTop: -Infinity, minLeft: -Infinity}.
+     *  
+     *  Centers element in viewport. If no position has been specified (i.e. position is `undefined` or 'static')
+     *  will be absolutely positioned. 
+    **/
 	centerInViewport: function(element, options) {
 		element = $(element);
 		options = Object.extend({minLeft: -Infinity, minTop: -Infinity}, options || {});
@@ -118,11 +123,11 @@ Object.extend(Element.Methods, {
 		return Element.getInnerDimensions(element).height;
 	},
 	
-	/**
-	 *  Element.setWidth(@element[, width]) -> Element
-	 *  - element (Element | String): Element or id of element.
-	 *  - width (Number): The desired width (defaults to current width of element).
-	**/
+    /**
+     *  Element.setWidth(@element[, width]) -> Element
+     *  - element (Element | String): Element or id of element.
+     *  - width (Number): The desired width (defaults to current width of element).
+    **/
 	setWidth: function(element, width) {
 		element = $(element);
 		return element.setStyle({
@@ -130,11 +135,11 @@ Object.extend(Element.Methods, {
 		});
 	},
 	
-	/**
-	 *  Element.setHeight(@element[, height]) -> Element
-	 *  - element (Element | String): Element or id of element.
-	 *  - width (Number): The desired height (defaults to current height of element).
-	**/
+    /**
+     *  Element.setHeight(@element[, height]) -> Element
+     *  - element (Element | String): Element or id of element.
+     *  - width (Number): The desired height (defaults to current height of element).
+    **/
 	setHeight: function(element, height) {
 		element = $(element);
 		return element.setStyle({
@@ -142,11 +147,11 @@ Object.extend(Element.Methods, {
 		});
 	},
 	
-	/**
-	 *  Element.setDimensions(@element[, dimensions]) -> Element
-	 *  - element (Element | String): Element or id of element.
-	 *  - dimensions (Object): The desired width and height (defaults to current dimensions of element).
-	**/
+    /**
+     *  Element.setDimensions(@element[, dimensions]) -> Element
+     *  - element (Element | String): Element or id of element.
+     *  - dimensions (Object): The desired width and height (defaults to current dimensions of element).
+    **/
 	setDimensions: function(element, dimensions) {
 		element = $(element);
 		var innerDims = element.getInnerDimensions(),

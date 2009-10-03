@@ -1,10 +1,10 @@
 /**
- * == Dialog ==
- * Classes utilizing the dialogs framework to provide dialog like
+ * == Core ==
+ * Classes utilizing the protototo framework to provide dialog like
  * behavior.
 **/
 
-/** section: Dialog
+/** section: Core
  * Dialog
 **/
 var Dialog = {};
@@ -44,26 +44,26 @@ var Dialog = {};
 		}
 	}
 	
-	/**
-	 *  Dialog.init() -> undefined
-	 * 
-	 *  Initializes the Dialogs library
-	**/
+    /**
+     *  Dialog.init() -> undefined
+     *  
+     *  Initializes the protototo library
+    **/
 	function init() {
 		Dialog.effects = window.Effect !== undef;
 		linkStylesheets();
 		createOverlay();
 	}
 	
-	/**
-	 *  Dialog.effectsQueue([position = 'end']) -> Object
-	 *  - position (String): position of effect in queue
-	 * 
-	 *  Returns the default effects queue options for dialogs
-	**/
+    /**
+     *  Dialog.effectsQueue([position = 'end']) -> Object
+     *  - position (String): position of effect in queue
+     *  
+     *  Returns the default effects queue options.
+    **/
 	function effectsQueue() {
 		var position = arguments[0] || 'end';
-		return {position: position, scope: 'dialogs'};
+		return {position: position, scope: 'protototo'};
 	}
 	
 	var registry = new Hash(),
@@ -101,10 +101,10 @@ var Dialog = {};
 		$(document.body).fire('screen:released');
 	}
 	
-	/**
-	 *  Dialog.register(dialog) -> undefined
-	 *  - dialog (Dialog.Base): the dialog to register
-	**/
+    /**
+     *  Dialog.register(dialog) -> undefined
+     *  - dialog (Dialog.Base): the dialog to register
+    **/
 	function register(dialog) {
 		if (dialog.isModal()) {
 			modals.push(dialog);
@@ -115,10 +115,10 @@ var Dialog = {};
 		registry.set(dialog.getFrame().identify(), dialog);
 	}
 	
-	/**
-	 *  Dialog.unregister(dialog) -> undefined
-	 *  - dialog (Dialog.Base): the dialog to unregister
-	**/
+    /**
+     *  Dialog.unregister(dialog) -> undefined
+     *  - dialog (Dialog.Base): the dialog to unregister
+    **/
 	function unregister(dialog) {
 		dialogs = dialogs.without(dialog);
 		if (dialog.isModal()) {
@@ -132,31 +132,31 @@ var Dialog = {};
 		registry.unset(dialog.getFrame().identify());
 	}
 	
-	/**
-	 *  Dialog.close(id) -> undefined
-	 *  - id (String): id of the dialog to close
-	**/
+    /**
+     *  Dialog.close(id) -> undefined
+     *  - id (String): id of the dialog to close
+    **/
 	function close(id) {
 		registry.get(id).close();
 	}
 	
-	/**
-	 *  Dialog.closeAll() -> undefined
-	 *  
-	 *  Closes all open windows, modal or otherwise
-	**/
+    /**
+     *  Dialog.closeAll() -> undefined
+     *  
+     *  Closes all open windows, modal or otherwise
+    **/
 	function closeAll() {
 		dialogs.invoke('close');
 	}
 	
-	/**
-	 *  Dialog.log(kind, message) -> undefined
-	 *  - kind (String): the kind of message to log (info, warning, error)
-	 *  - message (String): the message to log
-	 *  
-	 *  Designed to be used with the firebug console but will work as long
-	 *  as `console` and `console[kind]` are defined.
-	**/
+    /**
+     *  Dialog.log(kind, message) -> undefined
+     *  - kind (String): the kind of message to log (info, warning, error)
+     *  - message (String): the message to log
+     *  
+     *  Designed to be used with the firebug console but will work as long
+     *  as `console` and `console[kind]` are defined.
+    **/
 	function log(kind, message) {
 		if (console && console[kind]) {
 			console[kind]('protototo: ' + message);

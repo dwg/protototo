@@ -1,8 +1,13 @@
+/** section: Core
+ *  Dialog.Options.Buttons -> Object
+ *  
+ *  Options for dialog buttons.
+**/
 Dialog.Options.Buttons = Object.extend({
 	template: new Template('<a href="#" class="#{className}">#{text}</a>')
 }, window.DialogOptions && window.DialogOptions.Buttons || {});
 
-/** section: Dialog
+/** section Core
  *  class Dialog.ButtonPanel
  *  
  *  A class that provides a button panel for dialogs.
@@ -13,12 +18,12 @@ Dialog.ButtonPanel = (function() {
 	}
 	
 	return Class.create({
-		/**
-		 *  new Dialog.ButtonPanel(owner[, options = {}[, buttons...])
-		 *  - owner (Dialog.Interface): the dialog containing the panel.
-		 *  - options (Object): options to initialize the panel with.
-		 *  - buttons (Object): options for each button to insert into panel.
-		**/
+        /**
+         *  new Dialog.ButtonPanel(owner[, options = {}[, buttons...]])
+         *  - owner (Dialog.Interface): the dialog containing the panel.
+         *  - options (Object): options to initialize the panel with.
+         *  - buttons (Object): options for each button to insert into panel.
+        **/
 		initialize: function(owner) {
 			this.owner = owner;
 			var args = $A(arguments).slice(1);
@@ -33,13 +38,15 @@ Dialog.ButtonPanel = (function() {
 		createPanel: function() {
 			this.element = new Element('div', {className: 'dialog-buttons'});
 		},
-		/**
-		 *  Dialog.ButtonPanel#addButton(buttonOptions) -> Element
-		 *  - buttonOptions (Object): must contain an `onclick` attribute along with
-		 *    whatever attributes needed for the template.
-		**/
+        /**
+         *  Dialog.ButtonPanel#addButton(buttonOptions) -> Element
+         *  - buttonOptions (Object): must contain attributes needed for the template.
+         *  
+         *  Default options are:
+         *      {className: 'dialog-button', onclick: Event.stopper}
+        **/
 		addButton: function(buttonOptions) {
-			buttonOptions = Object.extend({className: 'dialog-button'}, buttonOptions);
+			buttonOptions = Object.extend({className: 'dialog-button', onclick: Event.stopper}, buttonOptions);
 			var button = buildButton(this.options.template, buttonOptions);
 			this.element.insert(button);
 			if (buttonOptions.close) {

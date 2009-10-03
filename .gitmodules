@@ -3,4 +3,7 @@
 	url = git://github.com/tobie/unittest_js.git
 [submodule "vendor/sprockets"]
 	path = vendor/sprockets
-	url = git://github.com/dwg/sprockets.git
+	url = git://github.com/sstephenson/sprockets.git
+[submodule "vendor/pdoc"]
+	path = vendor/pdoc
+	url = git://github.com/tobie/pdoc.git

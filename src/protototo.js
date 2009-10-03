@@ -1,5 +1,4 @@
 //= provide "../assets"
-
 /*  protototo
  *  JavaScript framework, version <%= PROTOTOTO_VERSION %>
  *  (c) 2009 Arni Einarsson

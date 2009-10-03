@@ -1,7 +1,8 @@
-/** section Dialog
- * Dialog.Options
- * 
- * Global options for dialogs.
+/** section: Core
+ *  Dialog.Options -> Object
+ *  
+ *  Global options for dialogs.
+ *  Overridable by defining `DialogOptions` before loading the protototo library.
 **/
 Dialog.Options = Object.extend({
 	assetPrefix: '',

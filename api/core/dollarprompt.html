@@ -1,41 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Prototype API documentation | $prompt utility</title>
-	  <meta name="generator" content="PDoc" />
-	  
-	  <script type="text/javascript" src="../javascripts/prototype.js" charset="utf-8"></script>
-<script type="text/javascript" src="../javascripts/effects.js" charset="utf-8"></script>
-<script type="text/javascript" src="../javascripts/controls.js" charset="utf-8"></script>
-	  <script type="text/javascript" src="../javascripts/application.js" charset="utf-8"></script>
-<script type="text/javascript" src="../javascripts/code_highlighter.js" charset="utf-8"></script>
-
-	  <script type="text/javascript" src="../javascripts/item_index.js" charset="utf-8"></script>
-	  	  
-	  <link type="text/css" rel="stylesheet" href="../stylesheets/core.css" media="screen, projection" charset="utf-8" />
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>protototo API documentation | $prompt utility</title>
+		<meta name="generator" content="PDoc" />
+		<link type="text/css" rel="stylesheet" href="../stylesheets/core.css" media="screen, projection" charset="utf-8" />
 <link type="text/css" rel="stylesheet" href="../stylesheets/api.css" media="screen, projection" charset="utf-8" />
-	  
-	  <script type="text/javascript">PDoc.pathPrefix = '../';</script>
-  </head>
-  <body class="">
-    <div id="page">
-      
-      <div id="masthead">
-        <div id="masthead_content">
-          <a href="http://prototypejs.org">
-            <h1 id="logo"><span class="replaced">Prototype JavaScript framework</span></h1>
-          </a>
-        </div> <!-- #masthead_content -->
-      </div> <!-- #masthead -->
-      
-      <div id="menu" class="clearfix">
-        <div class="api-box">
-          <h2><a href="#" id="api_menu_button">Menu &darr;</a></h2>
-          
-    			<ul id="api_menu" class="menu-items" style="display: none">
-    				
-    					<li class="current-parent">              <div class='menu-item'>
+	</head>
+	<body>
+		<div id="header">
+			<h1>proto<span>toto</span></h1>
+			<h2>Documentation</h2>
+			<p id="donate"><a href='http://www.pledgie.com/campaigns/6332'><img alt='Click here to lend your support to: protototo and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/6332.png?skin_name=chrome' border='0' /></a></p>
+		</div>
+		<ul id="navigation">
+			<li><a href="../../index.html">Home</a></li>
+			<li><a href="../../examples.html">Examples</a></li>
+			<li class="active"><a href="../index.html">Documentation</a></li>
+			<li><a href="http://github.com/dwg/protototo">Source</a></li>
+			<li><a href="http://dwg.lighthouseapp.com/projects/37440-protototo">Issues</a></li>
+		</ul>
+		<ul id="sidebar">
+			
+				<li class="current-parent">              <div class='menu-item'>
                 <a class="section" href="../core_section.html" title="Core section (section)">Core section</a>
               </div>
 <ul><li>              <div class='menu-item'>
@@ -73,8 +60,8 @@
                 <a class="mixin" href="../core/dialog/native.html" title="Dialog.Native (mixin)">Dialog.Native</a>
               </div>
 </li></ul></li></ul></li>
-    				
-    					<li>              <div class='menu-item'>
+			
+				<li>              <div class='menu-item'>
                 <a class="section" href="../language_section.html" title="Language section (section)">Language section</a>
               </div>
 <ul><li>              <div class='menu-item'>
@@ -89,8 +76,8 @@
                 <a class="class" href="../language/string.html" title="String (class)">String</a>
               </div>
 </li></ul></li>
-    				
-    					<li>              <div class='menu-item'>
+			
+				<li>              <div class='menu-item'>
                 <a class="section" href="../prototype_section.html" title="Prototype section (section)">Prototype section</a>
               </div>
 <ul><li>              <div class='menu-item'>
@@ -101,106 +88,50 @@
                 <a class="class" href="../prototype/event.html" title="Event (class)">Event</a>
               </div>
 </li></ul></li>
-    				
-    					<li>              <div class='menu-item'>
+			
+				<li>              <div class='menu-item'>
                 <a class="section" href="../tools_section.html" title="Tools section (section)">Tools section</a>
               </div>
 <ul><li>              <div class='menu-item'>
                 <a class="namespace" href="../tools/stylesheet.html" title="Stylesheet (namespace)">Stylesheet</a>
               </div>
 </li></ul></li>
-    				
-    			</ul>          
-        </div> <!-- .api-box -->
-
-        <div class="search-box">
-  			  <form>
-    			  <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
-  			  </form>
-  			  <ul id="search_results" class="search-results menu-items" style="display:none"></ul>
-        </div> <!-- .search-box -->
-
-      </div> <!-- #menu -->
-      
-      <div id="main" class="page-content">
-        
-        
-
-
-
-<ul class="breadcrumbs clearfix">
-  <li><a href="../index.html">Home</a> &rarr;</li>
-  
-  <li><a href="../core_section.html">Core</a> &rarr;</li>
-  
-</ul>
-
-<h2 class="page-title">
-  <span class="type">utility </span>$prompt
-</h2>
-
+			
+		</ul>
+		<div id="content">
+			
+<h2><span class="type">Utility</span> $prompt</h2>
 <div class="section">
-  <div class="section-title">
-    <h3>Description</h3>
-  </div> <!-- .section-title -->
-  
-  <div class="section-content">
-    <ul class="method-details-list">
-      <li class="method-description">
-  <h4 id="dollarprompt-utility">$prompt
-    <span class="method-permalink"><a href="../core/dollarprompt.html">#</a></span></h4>
-
-  
-    <pre class="syntax"><code class="ebnf">$prompt(question, handler) &rArr; <a href="../core/dialog/base.html" title="Dialog.Base (class)">Dialog.Base</a><br /></code></pre>
-  
-  
-  
-    
-  
-  
+	<h3 class="description">Description</h3>
+	<ul class="entities">
+		<li>
+	<h4 id="dollarprompt-utility">
+		$prompt
+		<span><a href="../core/dollarprompt.html">#</a></span>
+	</h4>
 	
-  
-  
-  
-  
-    <p class="alias alias-of">Alias of: <code><a href="../core/dialog/native.html#prompt-class_method" title="Dialog.Native.prompt (class method)">Dialog.Native.prompt</a></code></p>
-  
-  
-  
-    
-  
-  
+		<pre class="syntax"><code class="ebnf">$prompt(question, handler) &rArr; <a href="../core/dialog/base.html" title="Dialog.Base (class)">Dialog.Base</a><br /></code></pre>
+	
+	
+		
+	
+	
+	
+	
+		<p class="note alias">Alias of: <code><a href="../core/dialog/native.html#prompt-class_method" title="Dialog.Native.prompt (class method)">Dialog.Native.prompt</a></code></p>
+	
+	
+	
 </li>
-            
-    </ul>    
-  </div> <!-- .section-content -->
-</div> <!-- .section -->
-
-      </div> <!-- #main -->
-      
-      <div id="footer">
-        
-        <div class="about clearfix">
-          <div class="copyright clearfix">
-            <div class="cc">
-              <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://creativecommons.org/images/public/somerights20.png" /></a>
-            </div> <!-- .cc -->
-            <div class="copyright-about">
-              This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.
-            </div> <!-- .copyright-about -->
-          </div> <!-- .copyright -->
-          
-          <div class="credits">
-            <p>Generated by <a href="http://pdoc.org">PDoc</a>. Uses <a href="http://famfamfam.com/lab/icons/silk/" title="famfamfam.com: Silk Icons">Silk Icons</a>.</p>
-            
-          </div> <!-- .credits -->
-          
-        </div> <!-- .about -->
-        
-        
-      </div> <!-- #footer -->
-            
-    </div> <!-- #page -->
-
-</body>
+	</ul>
+</div>
+		</div>
+		<div id="footer">
+			<p class="credits">Generated by <a href="http://pdoc.org">PDoc</a>. Uses <a href="http://famfamfam.com/lab/icons/silk/" title="famfamfam.com: Silk Icons">Silk Icons</a>.</p>
+		</div>
+		<script type="text/javascript" src="../javascripts/prototype.js" charset="utf-8"></script>
+<script type="text/javascript" src="../javascripts/effects.js" charset="utf-8"></script>
+<script type="text/javascript" src="../javascripts/code_highlighter.js" charset="utf-8"></script>
+<script type="text/javascript" src="../javascripts/application.js" charset="utf-8"></script>
+	</body>
 </html>

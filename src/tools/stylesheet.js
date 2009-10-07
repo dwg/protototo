@@ -29,7 +29,7 @@ Stylesheet = (function() {
      *  Stylesheet.linked(path) -> Boolean
      *  - path (String): A path to a stylesheet
      *  
-     *  Returns true it there exists a `link` tag with
+     *  Returns true if there exists a `link` tag with
      *  path in the document, false otherwise.
     **/
 	function linked(path) {
@@ -39,6 +39,7 @@ Stylesheet = (function() {
     /**
      *  Stylesheet.findLink(path) -> Element
      *  - path (String): A path to a stylesheet
+     *  
     **/
 	function findLink(path) {
 		var name = extractNameFromPath(path),
@@ -55,6 +56,7 @@ Stylesheet = (function() {
      *  Stylesheet.linkTo(path[, media = 'screen']) -> Element
      *  - path (String): A path to a stylesheet
      *  - media (String): The media type for which the stylesheet should be linked
+     *  
     **/
 	function linkTo(path, media) {
 		return new Element('link', {

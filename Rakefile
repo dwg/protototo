@@ -38,11 +38,10 @@ module Protototo
     
     PDoc::Runner.new(temp_path, {
       :output    => DOC_DIR,
-      :templates => File.join(TEMPLATES_DIR, "html"),
-      :index_page => 'README.markdown'
+      :templates => File.join(TEMPLATES_DIR, "html")
     }).run
     
-#    rm_rf temp_path
+    rm_rf temp_path
   end
   
   def self.require_sprockets

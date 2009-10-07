@@ -1,21 +1,11 @@
-<% d = @doc_instance %>
-
-<% @title = "#{@doc_instance.full_name} utility" %>
-
-<%= include "partials/breadcrumbs", :object => d %>
-
-<h2 class="page-title">
-  <span class="type">utility </span><%= @doc_instance.name %>
-</h2>
-
+<%
+	d = @doc_instance
+	@title = "#{@doc_instance.full_name} utility"
+%>
+<h2><span class="type">Utility</span> <%= @doc_instance.name %></h2>
 <div class="section">
-  <div class="section-title">
-    <h3>Description</h3>
-  </div> <!-- .section-title -->
-  
-  <div class="section-content">
-    <ul class="method-details-list">
-      <%= include "partials/short_description", :collection => [@doc_instance] %>            
-    </ul>    
-  </div> <!-- .section-content -->
-</div> <!-- .section -->
+	<h3 class="description">Description</h3>
+	<ul class="entities">
+		<%= include "partials/short_description", :collection => [@doc_instance] %>
+	</ul>
+</div>

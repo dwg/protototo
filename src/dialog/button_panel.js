@@ -23,6 +23,7 @@ Dialog.ButtonPanel = (function() {
          *  - owner (Dialog.Interface): the dialog containing the panel.
          *  - options (Object): options to initialize the panel with.
          *  - buttons (Object): options for each button to insert into panel.
+         *  
         **/
 		initialize: function(owner) {
 			this.owner = owner;
@@ -43,6 +44,7 @@ Dialog.ButtonPanel = (function() {
          *  - buttonOptions (Object): must contain attributes needed for the template.
          *  
          *  Default options are:
+         *  
          *      {className: 'dialog-button', onclick: Event.stopper}
         **/
 		addButton: function(buttonOptions) {

@@ -127,6 +127,7 @@ Object.extend(Element.Methods, {
      *  Element.setWidth(@element[, width]) -> Element
      *  - element (Element | String): Element or id of element.
      *  - width (Number): The desired width (defaults to current width of element).
+     *  
     **/
 	setWidth: function(element, width) {
 		element = $(element);
@@ -138,7 +139,8 @@ Object.extend(Element.Methods, {
     /**
      *  Element.setHeight(@element[, height]) -> Element
      *  - element (Element | String): Element or id of element.
-     *  - width (Number): The desired height (defaults to current height of element).
+     *  - height (Number): The desired height (defaults to current height of element).
+     *  
     **/
 	setHeight: function(element, height) {
 		element = $(element);
@@ -151,6 +153,7 @@ Object.extend(Element.Methods, {
      *  Element.setDimensions(@element[, dimensions]) -> Element
      *  - element (Element | String): Element or id of element.
      *  - dimensions (Object): The desired width and height (defaults to current dimensions of element).
+     *  
     **/
 	setDimensions: function(element, dimensions) {
 		element = $(element);

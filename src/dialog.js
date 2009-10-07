@@ -6,6 +6,7 @@
 
 /** section: Core
  * Dialog
+ * includes Dialog.Native
 **/
 var Dialog = {};
 
@@ -104,6 +105,9 @@ var Dialog = {};
     /**
      *  Dialog.register(dialog) -> undefined
      *  - dialog (Dialog.Base): the dialog to register
+     *  
+     *  Registers the given dialog and covers the screen with
+     *  an overlay if the dialog is modal.
     **/
 	function register(dialog) {
 		if (dialog.isModal()) {
@@ -118,6 +122,9 @@ var Dialog = {};
     /**
      *  Dialog.unregister(dialog) -> undefined
      *  - dialog (Dialog.Base): the dialog to unregister
+     *  
+     *  Unregisters the given dialog and removes screen cover
+     *  if this is the last modal dialog in the registry.
     **/
 	function unregister(dialog) {
 		dialogs = dialogs.without(dialog);
@@ -135,6 +142,8 @@ var Dialog = {};
     /**
      *  Dialog.close(id) -> undefined
      *  - id (String): id of the dialog to close
+     *  
+     *  Closes the dialog with the given id.
     **/
 	function close(id) {
 		registry.get(id).close();
@@ -143,7 +152,7 @@ var Dialog = {};
     /**
      *  Dialog.closeAll() -> undefined
      *  
-     *  Closes all open windows, modal or otherwise
+     *  Closes all open windows, modal or otherwise.
     **/
 	function closeAll() {
 		dialogs.invoke('close');

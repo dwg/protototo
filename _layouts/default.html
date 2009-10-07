@@ -2,37 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		{% if page.title %}
 		<title>protototo - {{page.title}}</title>
-		{% else %}
-		<title>protototo</title>
-		{% endif %}
-		<link rel="stylesheet" type="text/css" href="stylesheets/application.css" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/core.css" />
 		<link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/application.css" />
 	</head>
 	<body>
-		<div id="page">
-			<div id="header">
-				<h1>proto<span>toto</span></h1>
-				{% if page.title %}
-				<h2>{{page.title}}</h2>
-				{% endif %}
-			</div>
-			<ul id="navigation">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="examples.html">Examples</a></li>
-				<li><a href="api/index.html">Api</a></li>
-				<li><a href="http://github.com/dwg/protototo">Source</a></li>
-				<li><a href="http://dwg.lighthouseapp.com/projects/37440-protototo">Issues</a></li>
-			</ul>
-			<div id="content">
-				{{content}}
-			</div>
+		<div id="header">
+			<h1>proto<span>toto</span></h1>
+			<h2>{{page.title}}</h2>
+			<p id="donate"><a href='http://www.pledgie.com/campaigns/6332'><img alt='Click here to lend your support to: protototo and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/6332.png?skin_name=chrome' border='0' /></a></p>
+		</div>
+		<ul id="navigation">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="examples.html">Examples</a></li>
+			<li><a href="api/index.html">Documentation</a></li>
+			<li><a href="http://github.com/dwg/protototo">Source</a></li>
+			<li><a href="http://dwg.lighthouseapp.com/projects/37440-protototo">Issues</a></li>
+		</ul>
+		<div id="content">
+			{{content}}
 		</div>
 		<script type="text/javascript" src="javascripts/prototype.js"></script>
 		<script type="text/javascript" src="javascripts/effects.js"></script>
 		<script type="text/javascript">DialogOptions = {assetPrefix: ''};</script>
 		<script type="text/javascript" src="javascripts/protototo.js"></script>
+		<script type="text/javascript" src="javascripts/code_highlighter.js"></script>
 		{% for script in page.scripts %}
 		<script type="text/javascript" src="javascripts/{{script}}.js"></script>
 		{% endfor %}

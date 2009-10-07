@@ -1,5 +1,6 @@
 ---
 layout: default
+title: by Arni Einarsson
 ---
 ## DESCRIPTION:
 
@@ -18,39 +19,39 @@ dialogs (alert, confirm, prompt).
 
 #### Showing simple alerts
 
-{% highlight javascript %}
+<pre><code class="javascript">
 $alert('This is a dialog');
-{% endhighlight %}
+</code></pre>
 
 #### Getting confirmation
 
-{% highlight javascript %}
+<pre><code class="javascript">
 $confirm('Are you sure?', function(yes) {
-  if (yes) Dialog.alert('Good for you');
-  else Dialog.alert('Boohoo');
+  if (yes) $alert('Good for you');
+  else $alert('Boohoo');
 });
-{% endhighlight %}
+</code></pre>
 
 #### Prompting a question
 
-{% highlight javascript %}
+<pre><code class="javascript">
 $prompt('What is your name?', function(answer) {
-  if (answer) Dialog.alert('Hi, ' + answer);
-  else Dialog.alert('How rude!');
+  if (answer) $alert('Hi, ' + answer);
+  else $alert('How rude!');
 });
-{% endhighlight %}
+</code></pre>
 
 #### Loading ajax content
 
-{% highlight javascript %}
+<pre><code class="javascript">
 new Dialog.Ajax('/path/to/content');
-{% endhighlight %}
+</code></pre>
 
 #### Doing something custom
 
-{% highlight javascript %}
+<pre><code class="javascript">
 new Dialog.Base({
-  content: '<form action="/login" method="post"><p><label for="login">Login</label><br/><input type="text" name="login" id="login"/></p><p><label for="password">Password</label><br/><input type="password" name="password" id="password"/></p></form>',
+  content: '&lt;form action="/login" method="post">&lt;p>&lt;label for="login">Login&lt;/label>&lt;br/>&lt;input type="text" name="login" id="login"/>&lt;/p>&lt;p>&lt;label for="password">Password&lt;/label>&lt;br/>&lt;input type="password" name="password" id="password"/>&lt;/p>&lt;/form>',
   buttons: [
     {text: 'Login', close: false, onclick: function(event) {
       event.stop();
@@ -62,7 +63,7 @@ new Dialog.Base({
     Dialog.current().contents.down('input').activate();
   }
 });
-{% endhighlight %}
+</code></pre>
 
 #### Options to dialogs
 
@@ -76,26 +77,26 @@ By default protototo assumes that asset paths are:
 If you want these to be different you can specify options before loading
 protototo:
 
-{% highlight javascript %}
+<pre><code class="javascript">
 DialogOptions = {
   assetPrefix: '/your/prefix', 
   stylesheetPath: '/path/to/stylesheet.css', // will look in /your/prefix/path/to/stylesheet.css
   busyImage: '/path/to/ajax/working.gif' // will look in /your/prefix/path/to/ajax/working.gif
 };
-{% endhighlight %}
+</code></pre>
 
 Other default options for all dialogs (these are the actual defaults):
 
-{% highlight javascript %}
+<pre><code class="javascript">
 DialogOptions = {
   overlayOpacity: 0.75,
   transitionDuration: 0.4,
   defaultWidth: 400,
   Buttons: {
-    template: new Template('<a href="#" class="#{className}">#{text}</a>') // how to build buttons
+    template: new Template('&lt;a href="#" class="#{className}">#{text}&lt;/a>') // how to build buttons
   }
 };
-{% endhighlight %}
+</code></pre>
 
 Options you can pass to dialogs to override defaults:
 
@@ -105,13 +106,9 @@ Options you can pass to dialogs to override defaults:
 * `buttons`: an array of button descriptions
 
 Button descriptions depend on the template used to create buttons.
-For a template like
+The description should at least include the attributes needed to fill the
+template, a default className is provided.
 
-{% highlight html %}
-<a href="#" class="#{className}">#{text}</a>
-{% endhighlight %}
-
-the description should include at least `text` and optionally a `className`.
 Additionally each button description accepts
 
 * `close`: true if you want the button to close the dialog
@@ -130,11 +127,11 @@ Additionally each button description accepts
 
 Then include the following in the html where you want protototo:
 
-{% highlight html %}
-<script type="text/javascript" src="path/to/prototype.js"></script>
-<script type="text/javascript" src="path/to/effects.js"></script>
-<script type="text/javascript" src="path/to/protototo.js"></script>
-{% endhighlight %}
+<pre><code class="html">
+&lt;script type="text/javascript" src="path/to/prototype.js">&lt;/script>
+&lt;script type="text/javascript" src="path/to/effects.js">&lt;/script>
+&lt;script type="text/javascript" src="path/to/protototo.js">&lt;/script>
+</code></pre>
 
 ## LICENSE:
 

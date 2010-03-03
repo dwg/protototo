@@ -2,12 +2,10 @@
  *  mixin Dialog.Native
  *  
  *  Utilities to simulate native browser dialogs.
- *  Mixed into the Dialog namespace for convenience. 
 **/
 Dialog.Native = {
     /**
      *  Dialog.Native.alert(message) -> Dialog.Base
-     *  Dialog.alert(message) -> Dialog.Base
      *  - message (String | Element): the message to alert.
      *  
      *  Simulates the native `alert` dialog.
@@ -18,7 +16,6 @@ Dialog.Native = {
 	
     /**
      *  Dialog.Native.confirm(question, handler) -> Dialog.Base
-     *  Dialog.confirm(question, handler) -> Dialog.Base
      *  - question (String | Element): the question to confirm.
      *  - handler (Function): to handle the answer.
      *  
@@ -37,7 +34,6 @@ Dialog.Native = {
 	
     /**
      *  Dialog.Native.prompt(question, handler) -> Dialog.Base
-     *  Dialog.prompt(question, handler) -> Dialog.Base
      *  - question (String | Element): the question to prompt.
      *  - handler (Function): to handle the answer.
      *  
@@ -56,7 +52,6 @@ Dialog.Native = {
 		});
 	}
 };
-Object.extend(Dialog, Dialog.Native);
 /** alias of: Dialog.Native.alert, section: Core
  *  $alert(message) -> Dialog.Base
 **/

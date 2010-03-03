@@ -71,15 +71,15 @@ Dialog.Message = (function() {
 document.observe('dom:loaded', function() {
 	$('alert').observe('click', function(event) {
 		event.stop();
-		Dialog.alert('Alert !');
+		$alert('Alert !');
 	});
 	$('confirm').observe('click', function(event) {
 		event.stop();
 		Dialog.confirm('Are you sure?', function(yes) {
 			if (yes) {
-				Dialog.alert('yay!!!');
+				$alert('yay!!!');
 			} else {
-				Dialog.alert('boo!!!');
+				$alert('boo!!!');
 			}
 		});
 	});
@@ -87,9 +87,9 @@ document.observe('dom:loaded', function() {
 		event.stop();
 		Dialog.prompt('What is your name?', function(answer) {
 			if (answer) {
-				Dialog.alert('Hi, ' + answer + '!');
+				$alert('Hi, ' + answer + '!');
 			} else {
-				Dialog.alert('How rude!');
+				$alert('How rude!');
 			}
 		});
 	});
@@ -115,7 +115,7 @@ document.observe('dom:loaded', function() {
 			b2 = new Element('a', {href: '#'}).update('Open dialog');
 		b1.observe('click', function(event) {
 			event.stop();
-			Dialog.confirm('Close all dialogs?', function(yes) {
+			$confirm('Close all dialogs?', function(yes) {
 				if (yes) {
 					Dialog.closeAll();
 				}
@@ -125,7 +125,7 @@ document.observe('dom:loaded', function() {
 			event.stop();
 			new Dialog.Base({content: b1});
 		});
-		Dialog.alert(b2);
+		$alert(b2);
 	});
 	$('info').observe('click', function(event) {
 		event.stop();

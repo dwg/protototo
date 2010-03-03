@@ -138,7 +138,7 @@ namespace :test do
     testcases        = ENV['TESTCASES']
     browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
     tests_to_run     = ENV['TESTS'] && ENV['TESTS'].split(',')
-    runner           = UnittestJS::WEBrickRunner::Runner.new(:test_dir => DIALOGS_TMP_DIR)
+    runner           = UnittestJS::WEBrickRunner::Runner.new(:test_dir => Protototo::TMP_DIR)
 
     Dir[File.join(Protototo::TMP_DIR, '*_test.html')].each do |file|
       file = File.basename(file)

@@ -1,3 +1,3 @@
 DialogOptions = {
-	assetPrefix: 'assets'
+	assetPrefix: 'assets/'
 };
